@@ -1,0 +1,50 @@
+{
+  "name": "react-native-formik",
+  "version": "0.0.0-development",
+  "description": "Make the most of your React Native forms with Formik",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "commitmsg": "validate-commit-msg",
+    "commit": "git-cz",
+    "semantic-release": "semantic-release",
+    "travis-deploy-once": "travis-deploy-once"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Almouro/react-native-formik.git"
+  },
+  "keywords": ["react-native", "formik", "forms"],
+  "dependencies": {
+    "lodash": "4.17.5",
+    "recompose": "^0.26.0"
+  },
+  "author": "Almouro <contact@almouro.com> (http://alexandremoureaux.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bamlab/react-native-formik/issues"
+  },
+  "homepage": "https://github.com/bamlab/react-native-formik#readme",
+  "devDependencies": {
+    "babel-core": "6.26.0",
+    "babel-jest": "^22.4.1",
+    "babel-preset-react-native": "4.0.0",
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.1.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.0.0",
+    "husky": "^0.14.3",
+    "jest": "^22.4.2",
+    "react": "16.2.0",
+    "react-dom": "16.2.0",
+    "react-native": "0.53.0",
+    "semantic-release": "^15.0.2",
+    "validate-commit-msg": "^2.14.0",
+    "travis-deploy-once": "^4.4.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
