@@ -14,16 +14,16 @@ This repository is a set of high order components designed to help you take cont
 
 **Table of contents**
 
-- [Installation]()
-- [Advanced Example]()
-- [API]()
-  - [makeReactNativeField]()
-  - [withError]()
-  - [withFocus]()
-  - [withFormik]()
-  - [withInputTypeProps]()
-  - [withNextInputAutoFocus]()
-  - [withTouched]()
+- [Installation](#installation)
+- [Advanced Example](#advanced-example)
+- [API](#api)
+  - [makeReactNativeField](#makereactnativefield)
+  - [withError](#witherror)
+  - [withFocus](#withfocus)
+  - [withFormik](#withformik)
+  - [withInputTypeProps](#withinputtypeprops)
+  - [withNextInputAutoFocus](#withnextinputautofocus)
+  - [withTouched](#withtouched)
 
 ## Installation
 
