@@ -8,13 +8,18 @@
     "commitmsg": "validate-commit-msg",
     "commit": "git-cz",
     "semantic-release": "semantic-release",
-    "travis-deploy-once": "travis-deploy-once"
+    "travis-deploy-once": "travis-deploy-once",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/Almouro/react-native-formik.git"
   },
-  "keywords": ["react-native", "formik", "forms"],
+  "keywords": [
+    "react-native",
+    "formik",
+    "forms"
+  ],
   "dependencies": {
     "lodash": "4.17.5",
     "recompose": "^0.26.0"
@@ -30,6 +35,7 @@
     "babel-jest": "^22.4.1",
     "babel-preset-react-native": "4.0.0",
     "commitizen": "^2.9.6",
+    "coveralls": "^3.0.0",
     "cz-conventional-changelog": "^2.1.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.0.0",
@@ -39,8 +45,8 @@
     "react-dom": "16.2.0",
     "react-native": "0.53.0",
     "semantic-release": "^15.0.2",
-    "validate-commit-msg": "^2.14.0",
-    "travis-deploy-once": "^4.4.0"
+    "travis-deploy-once": "^4.4.0",
+    "validate-commit-msg": "^2.14.0"
   },
   "config": {
     "commitizen": {
