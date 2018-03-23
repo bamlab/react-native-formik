@@ -18,6 +18,7 @@ This repository is a set of high order components designed to help you take cont
 - [Advanced Example](#advanced-example)
 - [API](#api)
   - [makeReactNativeField](#makereactnativefield)
+  - [setFormikInitialValue](#setFormikInitialValue)
   - [withError](#witherror)
   - [withFocus](#withfocus)
   - [withFormik](#withformik)
@@ -83,7 +84,7 @@ export default class MaterialTextInput extends React.PureComponent {
 ### Create our form logic
 
 Compose our input with high order components to make it awesome.
-`react-native-formik` exports as default `compose(withInputTypeProps, withError, withTouched, makeReactNativeField);`.
+`react-native-formik` exports as default `compose(withInputTypeProps, setFormikInitialValue, withError, withTouched, makeReactNativeField);`.
 
 Let's add in `withNextInputAutoFocusInput`:
 
@@ -253,6 +254,12 @@ export default props => {
   );
 };
 ```
+
+### setFormikInitialValue
+
+Set Input initial value to `""` to Formik without having to use `initialValues` prop.
+
+Especially it allows validation of untouched inputs when pressing submit.
 
 ### withError
 
