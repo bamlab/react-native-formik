@@ -38,7 +38,7 @@ export const withNextInputAutoFocusForm = WrappedComponent => {
         const isLastInput = inputPosition === this.inputs.length - 1;
 
         if (isLastInput) {
-          this.context.formik.handleSubmit();
+          this.context.formik.submitForm();
         } else {
           const nextInput = this.inputs[inputPosition + 1];
           this.inputRefs[nextInput.props.name].focus();
