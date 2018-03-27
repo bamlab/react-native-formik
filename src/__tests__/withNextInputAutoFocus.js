@@ -6,10 +6,10 @@ import { mount } from "enzyme";
 
 import { withNextInputAutoFocusForm, withNextInputAutoFocusInput } from "../..";
 
-const handleSubmit = jest.fn();
+const submitForm = jest.fn();
 const withFormikMock = withContext({ formik: PropTypes.object }, () => ({
   formik: {
-    handleSubmit
+    submitForm
   }
 }));
 
@@ -55,7 +55,7 @@ describe("withNextInputAutoFocus", () => {
     expect(focusInput).toHaveBeenCalledWith("last");
     lastInput.props().onSubmitEditing();
     expect(focusInput).not.toHaveBeenCalledTimes(3);
-    expect(handleSubmit).toHaveBeenCalled();
+    expect(submitForm).toHaveBeenCalled();
   });
 
   it("does not erase passed input props", () => {
@@ -70,7 +70,7 @@ describe("withNextInputAutoFocus", () => {
 
     expect(input.props().returnKeyType).toEqual("correct value");
     input.props().onSubmitEditing();
-    expect(handleSubmit).toHaveBeenCalled();
+    expect(submitForm).toHaveBeenCalled();
     expect(onSubmitEditing).toHaveBeenCalled();
   });
 });
