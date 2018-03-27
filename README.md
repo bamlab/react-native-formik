@@ -1,4 +1,4 @@
-# React Native Formik [![Coverage Status](https://coveralls.io/repos/bamlab/react-native-formik/badge.svg?branch=master)](https://coveralls.io/r/bamlab/react-native-formik?branch=master) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
+# React Native Formik [![Coverage Status](https://coveralls.io/repos/github/bamlab/react-native-formik/badge.svg?branch=master)](https://coveralls.io/github/bamlab/react-native-formik?branch=master) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 Forms are very verbose in React, and a lot of the time, you end up copy pasting a lot of boilerplate.
 
@@ -10,7 +10,7 @@ This repository is a set of high order components designed to help you take cont
 - Connects your React Native input to Formik with no boilerplate (See `makeReactNativeField`)
 - Add a `type` prop on your TextInput to take care of the input options based on the type (See `withInputTypeProps`)
 - Automatically focus the next input (See `withNextInputAutoFocus`)
-- Awesome Test coverage [![Coverage Status](https://coveralls.io/repos/bamlab/react-native-formik/badge.svg?branch=master)](https://coveralls.io/r/bamlab/react-native-formik?branch=master)
+- Awesome Test coverage [![Coverage Status](https://coveralls.io/repos/github/bamlab/react-native-formik/badge.svg?branch=master)](https://coveralls.io/github/bamlab/react-native-formik?branch=master)
 
 **Table of contents**
 
