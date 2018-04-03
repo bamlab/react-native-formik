@@ -10,7 +10,14 @@ const withNextInputAutoFocusContextType = {
   getReturnKeyType: PropTypes.func
 };
 
-const isInput = component => component && !!component.props.name;
+getInputs = children =>
+  (isArray(children) ? children : [children]).reduce((partialInputs, child) => {
+    if (child.props.children) {
+      return partialInputs.concat(getInputs(child.props.children));
+    }
+    if (child && !!child.props.name) return partialInputs.concat(child);
+    return partialInputs;
+  }, []);
 
 export const withNextInputAutoFocusForm = WrappedComponent => {
   class WithNextInputAutoFocusForm extends React.PureComponent {
@@ -20,14 +27,15 @@ export const withNextInputAutoFocusForm = WrappedComponent => {
     constructor(props) {
       super(props);
       const { children } = props;
-      this.inputs = (isArray(children) ? children : [children]).filter(isInput);
+      this.inputs = getInputs(children);
     }
 
     inputs;
     inputNameMap;
     inputRefs = {};
 
-    getInputPosition = name => this.inputs.findIndex(input => input.props.name === name);
+    getInputPosition = name =>
+      this.inputs.findIndex(input => input.props.name === name);
 
     getChildContext = () => ({
       setInput: (name, component) => {
@@ -40,8 +48,13 @@ export const withNextInputAutoFocusForm = WrappedComponent => {
         if (isLastInput) {
           this.context.formik.submitForm();
         } else {
-          const nextInput = this.inputs[inputPosition + 1];
-          this.inputRefs[nextInput.props.name].focus();
+          const nextInputs = this.inputs.slice(inputPosition + 1);
+          const nextFocusableInput = nextInputs.find(
+            element =>
+              this.inputRefs[element.props.name] &&
+              this.inputRefs[element.props.name].focus
+          );
+          this.inputRefs[nextFocusableInput.props.name].focus();
         }
       },
       getReturnKeyType: name => {
@@ -61,7 +74,10 @@ export const withNextInputAutoFocusForm = WrappedComponent => {
 };
 
 export const withNextInputAutoFocusInput = Input => {
-  class WithNextInputAutoFocusInput extends React.Component<$FlowFixMeProps, $FlowFixMeState> {
+  class WithNextInputAutoFocusInput extends React.Component<
+    $FlowFixMeProps,
+    $FlowFixMeState
+  > {
     static contextTypes = withNextInputAutoFocusContextType;
 
     setInput = component => {

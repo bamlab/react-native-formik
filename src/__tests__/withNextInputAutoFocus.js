@@ -35,7 +35,10 @@ describe("withNextInputAutoFocus", () => {
     const wrapper = mount(
       <Form>
         <Input name="first" />
-        <Input name="second" />
+        <View>
+          <View name="not-focusable" />
+          <Input name="second" />
+        </View>
         <Input name="last" />
         <Button onPress={jest.fn()} title="SUBMIT" />
       </Form>
@@ -62,7 +65,11 @@ describe("withNextInputAutoFocus", () => {
     const onSubmitEditing = jest.fn();
     const wrapper = mount(
       <Form>
-        <Input name="first" returnKeyType="correct value" onSubmitEditing={onSubmitEditing} />
+        <Input
+          name="first"
+          returnKeyType="correct value"
+          onSubmitEditing={onSubmitEditing}
+        />
       </Form>
     );
 
