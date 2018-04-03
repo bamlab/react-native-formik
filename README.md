@@ -16,6 +16,7 @@ This repository is a set of high order components designed to help you take cont
 
 - [Installation](#installation)
 - [Advanced Example](#advanced-example)
+- [Formatting inputs](#formatting-inputs)
 - [API](#api)
   - [makeReactNativeField](#makereactnativefield)
   - [setFormikInitialValue](#setFormikInitialValue)
@@ -183,6 +184,26 @@ export default props => (
     }}
   />
 );
+```
+
+## Formatting inputs
+
+You may need to format inputs as the user types in. For instance, adding spaces in a telephone number (`0612345678` -> `06 12 34 56 78`).
+
+```javascript
+const formatPhoneNumber: string => string = (unformattedPhoneNumber) => ...;
+
+...
+
+<Formik
+    render={({ values }) => {
+      return (
+        <Form>
+          <MyInput name="phoneNumber" value={formatPhoneNumber(values.phoneNumber)} />
+        </Form>
+      );
+    }}
+/>
 ```
 
 ## API
