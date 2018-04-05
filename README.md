@@ -6,26 +6,27 @@ This repository is a set of high order components designed to help you take cont
 
 **Features**
 
-- Easily composable set of helpers
-- Connects your React Native input to Formik with no boilerplate (See `makeReactNativeField`)
-- Add a `type` prop on your TextInput to take care of the input options based on the type (See `withInputTypeProps`)
-- Automatically focus the next input (See `withNextInputAutoFocus`)
-- Awesome Test coverage [![Coverage Status](https://coveralls.io/repos/github/bamlab/react-native-formik/badge.svg?branch=master)](https://coveralls.io/github/bamlab/react-native-formik?branch=master)
+* Easily composable set of helpers
+* Connects your React Native input to Formik with no boilerplate (See `makeReactNativeField`)
+* Add a `type` prop on your TextInput to take care of the input options based on the type (See `withInputTypeProps`)
+* Automatically focus the next input (See `withNextInputAutoFocus`)
+* Awesome Test coverage [![Coverage Status](https://coveralls.io/repos/github/bamlab/react-native-formik/badge.svg?branch=master)](https://coveralls.io/github/bamlab/react-native-formik?branch=master)
 
 **Table of contents**
 
-- [Installation](#installation)
-- [Advanced Example](#advanced-example)
-- [Formatting inputs](#formatting-inputs)
-- [API](#api)
-  - [makeReactNativeField](#makereactnativefield)
-  - [setFormikInitialValue](#setFormikInitialValue)
-  - [withError](#witherror)
-  - [withFocus](#withfocus)
-  - [withFormik](#withformik)
-  - [withInputTypeProps](#withinputtypeprops)
-  - [withNextInputAutoFocus](#withnextinputautofocus)
-  - [withTouched](#withtouched)
+* [Installation](#installation)
+* [Advanced Example](#advanced-example)
+* [Formatting inputs](#formatting-inputs)
+* [API](#api)
+  * [makeReactNativeField](#makereactnativefield)
+  * [setFormikInitialValue](#setFormikInitialValue)
+  * [withError](#witherror)
+  * [withFocus](#withfocus)
+  * [withFormik](#withformik)
+  * [withInputTypeProps](#withinputtypeprops)
+  * [withNextInputAutoFocus](#withnextinputautofocus)
+  * [withTouched](#withtouched)
+  * [withPickerValues](#withpickervalues)
 
 ## Installation
 
@@ -38,6 +39,7 @@ yarn add react-native-formik
 Say we want to create a form with Material design inputs.
 
 ### Create a custom input
+
 Let's create our custom text input design, called `MaterialTextInput`:
 
 We can use [react-native-material-textfield](https://github.com/n4kz/react-native-material-textfield) for the material design.
@@ -47,9 +49,9 @@ Notice our component also implement a `focus` function, for `withNextInputAutoFo
 
 ```javascript
 // MaterialTextInput.js
-import React from "react";
-import { Text, View } from "react-native";
-import { TextField } from "react-native-material-textfield";
+import React from 'react';
+import { Text, View } from 'react-native';
+import { TextField } from 'react-native-material-textfield';
 
 export default class MaterialTextInput extends React.PureComponent {
   // Your custom input needs a focus function for `withNextInputAutoFocus` to work
@@ -61,19 +63,25 @@ export default class MaterialTextInput extends React.PureComponent {
     const { error, touched, ...props } = this.props;
 
     const displayError = !!error && touched;
-    const errorColor = "rgb(239, 51, 64)";
+    const errorColor = 'rgb(239, 51, 64)';
 
     return (
       <View>
         <TextField
-          ref={input => this.input = input}
+          ref={input => (this.input = input)}
           labelHeight={12}
-          baseColor={displayError ? errorColor : "#1976D2"}
+          baseColor={displayError ? errorColor : '#1976D2'}
           tintColor="#2196F3"
           textColor="#212121"
           {...props}
         />
-        <Text style={{ textAlign: "right", color: displayError ? errorColor : "transparent", height: 20 }}>
+        <Text
+          style={{
+            textAlign: 'right',
+            color: displayError ? errorColor : 'transparent',
+            height: 20,
+          }}
+        >
           {error}
         </Text>
       </View>
@@ -90,9 +98,9 @@ Compose our input with high order components to make it awesome.
 Let's add in `withNextInputAutoFocusInput`:
 
 ```javascript
-import { compose } from "recompose";
-import makeInputGreatAgain, { withNextInputAutoFocusInput } from "react-native-formik";
-import MaterialTextInput from "./MaterialTextInput";
+import { compose } from 'recompose';
+import makeInputGreatAgain, { withNextInputAutoFocusInput } from 'react-native-formik';
+import MaterialTextInput from './MaterialTextInput';
 
 const MyInput = compose(makeInputGreatAgain, withNextInputAutoFocusInput)(MaterialTextInput);
 ```
@@ -100,8 +108,8 @@ const MyInput = compose(makeInputGreatAgain, withNextInputAutoFocusInput)(Materi
 To complement `withNextInputAutoFocusInput`, we need to create a `Form` component, for instance:
 
 ```javascript
-import { View } from "react-native";
-import { withNextInputAutoFocusForm } from "react-native-formik";
+import { View } from 'react-native';
+import { withNextInputAutoFocusForm } from 'react-native-formik';
 
 const Form = withNextInputAutoFocusForm(View);
 ```
@@ -109,7 +117,7 @@ const Form = withNextInputAutoFocusForm(View);
 We can also create a validation schema, with `yup`. It's of course possible to use other validation possibilities provided by Formik, but `yup` makes validation and error messaging painless.
 
 ```javascript
-import Yup from "yup";
+import Yup from 'yup';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -117,7 +125,7 @@ const validationSchema = Yup.object().shape({
     .email("well that's not an email"),
   password: Yup.string()
     .required()
-    .min(2, "pretty sure this will be hacked")
+    .min(2, 'pretty sure this will be hacked'),
 });
 ```
 
@@ -126,7 +134,7 @@ Then the form in itself becomes simple:
 ```javascript
 export default props => (
   <Formik
-    onSubmit={(values) => console.log(values)}
+    onSubmit={values => console.log(values)}
     validationSchema={validationSchema}
     render={props => {
       return (
@@ -146,30 +154,32 @@ export default props => (
 Full code:
 
 ```javascript
-import React from "react";
-import { Button, TextInput, View } from "react-native";
-import { compose } from "recompose"
-import { Formik } from "formik";
-import Yup from "yup";
-import makeInputGreatAgain, { withNextInputAutoFocusForm, withNextInputAutoFocusInput } from "react-native-formik";
-import MaterialTextInput from "./MaterialTextInput";
+import React from 'react';
+import { Button, TextInput, View } from 'react-native';
+import { compose } from 'recompose';
+import { Formik } from 'formik';
+import Yup from 'yup';
+import makeInputGreatAgain, {
+  withNextInputAutoFocusForm,
+  withNextInputAutoFocusInput,
+} from 'react-native-formik';
+import MaterialTextInput from './MaterialTextInput';
 
 const MyInput = compose(makeInputGreatAgain, withNextInputAutoFocusInput)(MaterialTextInput);
 const Form = withNextInputAutoFocusForm(View);
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
-    .required("please! email?")
+    .required('please! email?')
     .email("well that's not an email"),
   password: Yup.string()
     .required()
-    .min(2, "pretty sure this will be hacked")
+    .min(2, 'pretty sure this will be hacked'),
 });
-
 
 export default props => (
   <Formik
-    onSubmit={(values) => console.log(values)}
+    onSubmit={values => console.log(values)}
     validationSchema={validationSchema}
     render={props => {
       return (
@@ -212,22 +222,24 @@ const formatPhoneNumber: string => string = (unformattedPhoneNumber) => ...;
 ### makeReactNativeField
 
 Connects your React Native component to the Formik context:
-- its value will be set
-- it will send `onChangeText` and `onBlur` events to Formik
+
+* its value will be set
+* it will send `onChangeText` and `onBlur` events to Formik
 
 Now you only need this code:
+
 ```javascript
-import React from "react";
-import { TextInput, View } from "react-native";
-import { Formik } from "formik";
-import { makeReactNativeField } from "react-native-formik";
+import React from 'react';
+import { TextInput, View } from 'react-native';
+import { Formik } from 'formik';
+import { makeReactNativeField } from 'react-native-formik';
 
 const MyInput = makeReactNativeField(TextInput);
 
 export default props => {
   return (
     <Formik
-      onSubmit={(values) => console.log(values)}
+      onSubmit={values => console.log(values)}
       render={props => {
         return (
           <View>
@@ -242,32 +254,33 @@ export default props => {
 ```
 
 instead of:
+
 ```javascript
-import React from "react";
-import { TextInput, View } from "react-native";
-import { Formik } from "formik";
-import { makeReactNativeField } from "react-native-formik";
+import React from 'react';
+import { TextInput, View } from 'react-native';
+import { Formik } from 'formik';
+import { makeReactNativeField } from 'react-native-formik';
 
 const MyInput = makeReactNativeField(TextInput);
 
 export default props => {
   return (
     <Formik
-      onSubmit={(values) => console.log(values)}
+      onSubmit={values => console.log(values)}
       render={props => {
         return (
           <View>
             <MyInput
               name="email"
               value={props.value.email}
-              onChangeText={(text) => props.setFieldValue("email", text)}
-              onBlur={() => setFieldTouched("email")}
+              onChangeText={text => props.setFieldValue('email', text)}
+              onBlur={() => setFieldTouched('email')}
             />
             <MyInput
               name="password"
               value={props.value.email}
-              onChangeText={(text) => props.setFieldValue("password", text)}
-              onBlur={() => setFieldTouched("password")}
+              onChangeText={text => props.setFieldValue('password', text)}
+              onBlur={() => setFieldTouched('password')}
             />
           </View>
         );
@@ -302,8 +315,8 @@ Let's face it, you'll always want to remove auto-capitalization for email inputs
 Using `withInputTypeProps` and passing a `type`, you'll always get the correct props for you input.
 
 ```javascript
-import { TextInput } from "react-native";
-import { withInputTypeProps } from "react-native-formik";
+import { TextInput } from 'react-native';
+import { withInputTypeProps } from 'react-native-formik';
 
 const MyInput = withInputTypeProps(TextInput);
 
@@ -316,21 +329,21 @@ Check [the props set by the type](./src/withInputTypeProps) in the source!
 
 ### withNextInputAutoFocus
 
-- when an input is submitted, it will automatically focuses on the next or submit the form if it's the last one
-- sets return key to "next" or "done" if input is the last one or not
-- :warning: your input component needs to be a class and needs to implement a `focus` function
-- :warning: Inputs need to be wrapped by `withNextInputAutoFocusInput` and the container of the inputs need to be wrapped in `withNextInputAutoFocusForm`.
+* when an input is submitted, it will automatically focuses on the next or submit the form if it's the last one
+* sets return key to "next" or "done" if input is the last one or not
+* :warning: your input component needs to be a class and needs to implement a `focus` function
+* :warning: Inputs need to be wrapped by `withNextInputAutoFocusInput` and the container of the inputs need to be wrapped in `withNextInputAutoFocusForm`.
 
 ```javascript
-import { TextInput, View } from "react-native";
-import { withNextInputAutoFocusForm, withNextInputAutoFocusInput } from "react-native-formik";
+import { TextInput, View } from 'react-native';
+import { withNextInputAutoFocusForm, withNextInputAutoFocusInput } from 'react-native-formik';
 
 const MyInput = withNextInputAutoFocusInput(TextInput);
 const Form = withNextInputAutoFocusForm(View);
 
 export default props => (
   <Formik
-    onSubmit={(values) => console.log(values)}
+    onSubmit={values => console.log(values)}
     validationSchema={validationSchema}
     render={props => {
       return (
@@ -348,3 +361,32 @@ export default props => (
 ### withTouched
 
 Pass in the Formik touched value for the input as a prop.
+
+### withPickerValues
+
+Wraps your component into a `TouchableOpacity` which, when pressed, opens a dialog to pick a value.
+You need to provide a `values` props with the pickable items.
+
+```javascript
+import { TextInput, View } from 'react-native';
+import { withPickerValues } from 'react-native-formik';
+
+const MyPicker = withPickerValues(TextInput);
+
+export default props => (
+  <Formik
+    onSubmit={values => console.log(values)}
+    validationSchema={validationSchema}
+    render={props => {
+      return (
+        <View>
+          <MyPicker
+            name="gender"
+            values={[{ label: 'male', value: 'Mr' }, { label: 'female', value: 'Mrs' }]}
+          />
+        </View>
+      );
+    }}
+  />
+);
+```
