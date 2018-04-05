@@ -21,6 +21,8 @@
     "forms"
   ],
   "dependencies": {
+    "@bam.tech/react-native-modalbox": "^1.4.2",
+    "@bam.tech/react-native-root-siblings": "^2.0.3",
     "lodash": "4.17.5",
     "recompose": "^0.26.0"
   },
