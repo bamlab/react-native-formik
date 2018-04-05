@@ -1,8 +1,6 @@
 // @flow
 
 import React from 'react';
-import { compose } from 'recompose';
-
 import PickerModal from './PickerModal';
 
 const withPickerModal = Component => props => {
@@ -14,4 +12,4 @@ const withPickerModal = Component => props => {
   );
 };
 
-export default compose(withPickerModal);
+export default withPickerModal;
