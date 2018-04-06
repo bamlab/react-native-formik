@@ -10,7 +10,6 @@ This repository is a set of high order components designed to help you take cont
 * Connects your React Native input to Formik with no boilerplate (See `makeReactNativeField`)
 * Add a `type` prop on your TextInput to take care of the input options based on the type (See `withInputTypeProps`)
 * Automatically focus the next input (See `withNextInputAutoFocus`)
-* Awesome Test coverage [![Coverage Status](https://coveralls.io/repos/github/bamlab/react-native-formik/badge.svg?branch=master)](https://coveralls.io/github/bamlab/react-native-formik?branch=master)
 
 **Table of contents**
 
