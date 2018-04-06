@@ -18,11 +18,15 @@ class PickerModal extends PureComponent<PropsType> {
 
   onValueChange = (value: any) => {
     if (this.props.onChangeText) this.props.onChangeText(value);
+    if (this.props.onSubmitEditing) this.props.onSubmitEditing();
+    if (this.pickerModal) this.pickerModal.close();
   };
 
   renderPicker = () => {
-    const { values, placeholder, value } = this.props;
-    if (values && Platform.OS === 'ios') {
+    const { placeholder, value } = this.props;
+    if (!this.props.values || !this.props.values.length) return null;
+    const values = [...this.props.values];
+    if (Platform.OS === 'ios') {
       values.unshift({ value: '', label: placeholder });
     }
     const picker = (
@@ -40,7 +44,16 @@ class PickerModal extends PureComponent<PropsType> {
         {picker}
       </KeyboardModal>
     ) : (
-      <View style={{ opacity: 0, position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }}>
+      <View
+        style={{
+          opacity: 0,
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          right: 0,
+          left: 0,
+        }}
+      >
         {picker}
       </View>
     );
