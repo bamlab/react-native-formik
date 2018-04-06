@@ -21,10 +21,13 @@ class PickerModal extends PureComponent<PropsType> {
   };
 
   renderPicker = () => {
+    const { values, placeholder, value } = this.props;
+    if (values && Platform.OS === 'ios') {
+      values.unshift({ value: '', label: placeholder });
+    }
     const picker = (
-      <Picker onValueChange={this.onValueChange} selectedValue={this.props.value}>
-        <Picker.Item value="" label={this.props.placeholder} />
-        {this.props.values.map(item => <Picker.Item key={item.value} {...item} />)}
+      <Picker onValueChange={this.onValueChange} selectedValue={value} prompt={placeholder}>
+        {values.map(item => <Picker.Item key={item.value} {...item} />)}
       </Picker>
     );
 
@@ -37,7 +40,9 @@ class PickerModal extends PureComponent<PropsType> {
         {picker}
       </KeyboardModal>
     ) : (
-      picker
+      <View style={{ opacity: 0, position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }}>
+        {picker}
+      </View>
     );
   };
 
