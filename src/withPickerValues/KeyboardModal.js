@@ -54,7 +54,6 @@ const createKeyboardModalComponent = (props: _Props) => {
   currentProps = props;
 
   keyboardModalInstance = new RootSiblings(renderModal(props));
-  debugger;
   keyboardDidShowListener = Keyboard.addListener('keyboardWillShow', keyboardDidShow);
 };
 
