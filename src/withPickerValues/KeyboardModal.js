@@ -62,7 +62,7 @@ const removeKeyboardModalComponent = () => {
 
   if (keyboardModalCount === 0) {
     if (keyboardDidShowListener) keyboardDidShowListener.remove();
-    if (keyboardModalInstance) keyboardModalInstance.remove();
+    if (keyboardModalInstance) keyboardModalInstance.destroy();
   }
 };
 
