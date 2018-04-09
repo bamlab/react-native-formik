@@ -28,6 +28,9 @@ class PickerModal extends PureComponent<PropsType> {
     const values = [...this.props.values];
     if (Platform.OS === 'ios') {
       values.unshift({ value: '', label: placeholder });
+    } else {
+      // Fix for issue: https://github.com/facebook/react-native/issues/15556
+      values.push({ value: '', label: '' });
     }
     const picker = (
       <Picker onValueChange={this.onValueChange} selectedValue={value} prompt={placeholder}>
