@@ -3,6 +3,7 @@
   "version": "0.0.0-development",
   "description": "Make the most of your React Native forms with Formik",
   "main": "index.js",
+  "type": "index.d.ts",
   "scripts": {
     "test": "jest --coverage",
     "commitmsg": "validate-commit-msg",
@@ -33,6 +34,7 @@
   },
   "homepage": "https://github.com/bamlab/react-native-formik#readme",
   "devDependencies": {
+    "@types/react": "^16.3.8",
     "babel-core": "6.26.0",
     "babel-jest": "^22.4.1",
     "babel-preset-react-native": "4.0.0",
