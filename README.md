@@ -388,7 +388,7 @@ export default props => (
     }}
   />
 );
-```
+
             name="gender"
             values={[
               { label: "male", value: "Mr" },
@@ -486,4 +486,4 @@ For Android, we have to use react-native-keyboard-spacer because `android:window
 
 Enjoy your life :
 
-![iOS]()
+![iOS](https://github.com/bamlab/react-native-formik/blob/bottom-form/doc/images/bottomForm.gif)
