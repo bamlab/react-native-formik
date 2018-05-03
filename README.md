@@ -482,7 +482,7 @@ const styles = {
 export default AdoptACat;
 ```
 
-For Android, we have to use react-native-keyboard-spacer because `android:windowSoftInputMode` is in `adjustResize` mode. Indeed, the view is automatically resize and you don't have to fill it like on iOS.
+For Android, we don't have to use react-native-keyboard-spacer because `android:windowSoftInputMode` is in `adjustResize` mode. Indeed, the view is automatically resize and you don't have to fill it like on iOS.
 
 Enjoy your life :
 
