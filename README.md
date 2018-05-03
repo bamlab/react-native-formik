@@ -389,3 +389,101 @@ export default props => (
   />
 );
 ```
+            name="gender"
+            values={[
+              { label: "male", value: "Mr" },
+              { label: "female", value: "Mrs" }
+            ]}
+          />
+        </View>
+      );
+    }}
+  />
+);
+```
+
+## Troubleshooting
+
+### Create a form at the bottom of a page
+
+The purpose of this section is to give you a solution to create a bottom form which will go up when the keyboard appear, and the content at the top at the page will disappear.
+
+You have to :
+
+* Create a form like you learn before ;
+* Use [react-native-keyboard-spacer](https://github.com/Andr3wHur5t/react-native-keyboard-spacer) : it will create view with the keyboard's size when the keyboard will opened;
+* Use [react-native-hide-with-keyboard](https://github.com/bamlab/react-native-hide-with-keyboard) : it will hide component when the keyboard will opened.
+
+```javascript
+import React, { PureComponent } from "react";
+import { Image, Platform, ScrollView } from "react-native";
+import Hide from "react-native-hide-with-keyboard";
+import KeyboardSpacer from "react-native-keyboard-spacer";
+import { Formik } from "formik";
+import { Button, FormFormik, TextInputFormik } from "./components";
+const cat = require("./cat.jpg");
+
+class AdoptACat extends PureComponent<{}> {
+  render() {
+    return (
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+        keyboardShouldPersistTaps="handled"
+      >
+        <Hide>
+          <Image source={cat} style={styles.image} />
+        </Hide>
+        <View style={styles.fillContainer} />
+        <Formik
+          onSubmit={() => {}}
+          render={props => (
+            <FormFormik>
+              <TextInputFormik
+                name="catName"
+                placeholder={"His name"}
+                returnKeyType="next"
+                type="name"
+              />
+              <TextInputFormik
+                name="humanName"
+                placeholder={"Your name"}
+                returnKeyType="done"
+                type="name"
+              />
+              <Button text={"Adopt him ..."} />
+            </FormFormik>
+          )}
+        />
+        {Platform.OS === "ios" && <KeyboardSpacer />}
+      </ScrollView>
+    );
+  }
+}
+
+const styles = {
+  container: {
+    backgroundColor: "white",
+    flex: 1,
+    padding: 20
+  },
+  contentContainer: {
+    flex: 1
+  },
+  fillContainer: {
+    flex: 1
+  },
+  image: {
+    alignSelf: "center",
+    resizeMode: "contain"
+  }
+};
+
+export default AdoptACat;
+```
+
+For Android, we have to use react-native-keyboard-spacer because `android:windowSoftInputMode` is in `adjustResize` mode. Indeed, the view is automatically resize and you don't have to fill it like on iOS.
+
+Enjoy your life :
+
+![iOS]()
