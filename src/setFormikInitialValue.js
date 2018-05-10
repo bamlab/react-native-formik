@@ -1,12 +1,17 @@
 import React from "react";
 import { compose, mapProps } from "recompose";
+import { has } from "lodash";
 import withFormik from "./withFormik";
 
 const setFormikInitialValue = WrappedInput => {
   return class WithFocusProp extends React.PureComponent {
     constructor(props) {
       super(props);
-      props.formik.setFieldValue(props.name, "");
+
+      const { formik, name } = props;
+      if (!has(formik.values, name)) {
+        formik.setFieldValue(name, "");
+      }
     }
 
     render() {
