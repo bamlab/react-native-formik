@@ -388,31 +388,19 @@ export default props => (
     }}
   />
 );
-
-            name="gender"
-            values={[
-              { label: "male", value: "Mr" },
-              { label: "female", value: "Mrs" }
-            ]}
-          />
-        </View>
-      );
-    }}
-  />
-);
 ```
 
-## Troubleshooting
+## Guide
 
-### Create a form at the bottom of a page
+### Move form above keyboard
 
-The purpose of this section is to give you a solution to create a bottom form which will go up when the keyboard appear, and the content at the top at the page will disappear.
+The purpose of this section is to give you a solution to create a bottom form which will go up when the keyboard appears, and the content at the top at the page will disappear.
 
-You have to :
+You have to:
 
-* Create a form like you learn before ;
-* Use [react-native-keyboard-spacer](https://github.com/Andr3wHur5t/react-native-keyboard-spacer) : it will create view with the keyboard's size when the keyboard will opened;
-* Use [react-native-hide-with-keyboard](https://github.com/bamlab/react-native-hide-with-keyboard) : it will hide component when the keyboard will opened.
+* Create a form like you learnt above ;
+* Use [react-native-keyboard-spacer](https://github.com/Andr3wHur5t/react-native-keyboard-spacer): it will create view with the keyboard's size when the keyboard will opened;
+* Use [react-native-hide-with-keyboard](https://github.com/bamlab/react-native-hide-with-keyboard): it will hide component when the keyboard will opened.
 
 ```javascript
 import React, { PureComponent } from "react";
