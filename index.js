@@ -6,6 +6,7 @@ import withFormik from './src/withFormik';
 import withInputTypeProps from './src/withInputTypeProps';
 import withTouched from './src/withTouched';
 import withPickerValues from './src/withPickerValues';
+import KeyboardModal from './src/withPickerValues/KeyboardModal';
 import makeReactNativeField from './src/makeReactNativeField';
 import {
   withNextInputAutoFocusForm,
@@ -34,4 +35,5 @@ export {
   withNextInputAutoFocusForm,
   withNextInputAutoFocusInput,
   withPickerValues,
+  KeyboardModal
 };
