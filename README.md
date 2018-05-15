@@ -366,15 +366,18 @@ Pass in the Formik touched value for the input as a prop.
 Wraps your component into a `TouchableOpacity` which, when pressed, opens a dialog to pick a value.
 You need to provide a `values` props with the pickable items.
 
+If you need to dismiss the picker's "Keyboard", you can use `KeyboardModal.dismiss()` like below.
+
 ```javascript
 import { TextInput, View } from 'react-native';
-import { withPickerValues } from 'react-native-formik';
+import { compose } from "recompose";
+import makeInput, { KeyboardModal, withPickerValues } from 'react-native-formik';
 
-const MyPicker = withPickerValues(TextInput);
+const MyPicker = compose(makeInput, withPickerValues)(TextInput);
 
 export default props => (
   <Formik
-    onSubmit={values => console.log(values)}
+    onSubmit={values => { KeyboardModal.dismiss(); console.log(values); }}
     validationSchema={validationSchema}
     render={props => {
       return (
