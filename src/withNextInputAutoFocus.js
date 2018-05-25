@@ -11,7 +11,7 @@ const withNextInputAutoFocusContextType = {
 };
 
 getInputs = children =>
-  (isArray(children) ? children : [children]).reduce((partialInputs, child) => {
+  (isArray(children) ? children : [children]).filter(child => !!child).reduce((partialInputs, child) => {
     if (child.props && child.props.children) {
       return partialInputs.concat(getInputs(child.props.children));
     }
@@ -33,6 +33,14 @@ export const withNextInputAutoFocusForm = WrappedComponent => {
     inputs;
     inputNameMap;
     inputRefs = {};
+
+    componentWillReceiveProps(nextProps) {
+      const nonEmptyChildrenOld = this.props.children && this.props.children.filter(child => !!child);
+      const nonEmptyChildrenNew = nextProps.children && nextProps.children.filter(child => !!child);
+      if (nonEmptyChildrenNew && nonEmptyChildrenOld && (nonEmptyChildrenNew.length !== nonEmptyChildrenOld.length)) {
+        this.inputs = getInputs(nextProps.children);
+      }
+    }
 
     getInputPosition = name =>
       this.inputs.findIndex(input => input.props.name === name);
