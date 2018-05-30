@@ -116,7 +116,7 @@ const Form = withNextInputAutoFocusForm(View);
 We can also create a validation schema, with `yup`. It's of course possible to use other validation possibilities provided by Formik, but `yup` makes validation and error messaging painless.
 
 ```javascript
-import Yup from 'yup';
+import * as Yup from 'yup';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -157,7 +157,7 @@ import React from 'react';
 import { Button, TextInput, View } from 'react-native';
 import { compose } from 'recompose';
 import { Formik } from 'formik';
-import Yup from 'yup';
+import * as Yup from 'yup';
 import makeInputGreatAgain, {
   withNextInputAutoFocusForm,
   withNextInputAutoFocusInput,
