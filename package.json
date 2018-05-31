@@ -58,6 +58,6 @@
     }
   },
   "peerDependencies": {
-    "formik": "0.11.x"
+    "formik": ">= 0.11.x < 2"
   }
 }
