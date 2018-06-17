@@ -10,7 +10,7 @@ const withNextInputAutoFocusContextType = {
   getReturnKeyType: PropTypes.func
 };
 
-getInputs = children =>
+const getInputs = children =>
   (isArray(children) ? children : [children]).reduce((partialInputs, child) => {
     if (child.props && child.props.children) {
       return partialInputs.concat(getInputs(child.props.children));
