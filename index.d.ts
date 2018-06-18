@@ -4,6 +4,10 @@ export interface makeReactNativeFieldProps {
   name: string;
 }
 
+export interface setFormikInitialValueProps {
+  name: string;
+}
+
 export interface withInputTypePropsProps {
   type: string;
 }
@@ -17,6 +21,7 @@ export interface withTouchedProps {
 }
 
 export type makeInputGreatAgainProps = makeReactNativeFieldProps &
+  setFormikInitialValueProps &
   withInputTypePropsProps &
   withErrorProps &
   withTouchedProps;
@@ -24,6 +29,10 @@ export type makeInputGreatAgainProps = makeReactNativeFieldProps &
 export function makeReactNativeField<Props>(
   WrappedComponent: React.ComponentType<Props>
 ): React.ComponentClass<Props & makeReactNativeFieldProps>;
+
+export function setFormikInitialValue<Props>(
+  WrappedComponent: React.ComponentType<Props>
+): React.ComponentClass<Props & setFormikInitialValueProps>;
 
 export function withError<Props>(
   WrappedComponent: React.ComponentType<Props>
