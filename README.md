@@ -477,4 +477,4 @@ For Android, we don't have to use react-native-keyboard-spacer because `android:
 
 Enjoy your life :
 
-![iOS](https://github.com/bamlab/react-native-formik/blob/bottom-form/doc/images/bottomForm.gif)
+![iOS](https://github.com/bamlab/react-native-formik/blob/master/doc/images/bottomForm.gif)
