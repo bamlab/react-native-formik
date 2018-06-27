@@ -56,5 +56,8 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "peerDependencies": {
+    "formik": ">= 0.11.x < 2"
   }
 }

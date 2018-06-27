@@ -30,7 +30,7 @@ This repository is a set of high order components designed to help you take cont
 ## Installation
 
 ```shell
-yarn add react-native-formik
+yarn add formik react-native-formik
 ```
 
 ## Advanced Example
