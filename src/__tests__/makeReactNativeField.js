@@ -15,7 +15,13 @@ const withFormikMock = withContext({ formik: PropTypes.object }, () => ({
   formik: {
     setFieldValue,
     setFieldTouched,
-    values: { email: "contact@bam.tech" }
+    values: {
+      email: "contact@bam.tech",
+      user: {
+        username: "bam-dev",
+        password: 'goodchallenge',
+      }
+    }
   }
 }));
 const Input = compose(withFormikMock, makeReactNativeField)(TextInput);
@@ -25,6 +31,13 @@ describe("makeReactNativeField", () => {
     const emailInput = mount(<Input name="email" />);
     expect(emailInput.find(TextInput).props().value).toEqual("contact@bam.tech");
     const otherInput = mount(<Input name="other" />);
+    expect(otherInput.find(TextInput).props().value).toEqual(undefined);
+  });
+
+  it('sets the input value for nested key name', () => {
+    const emailInput = mount(<Input name="user.username" />);
+    expect(emailInput.find(TextInput).props().value).toEqual("bam-dev");
+    const otherInput = mount(<Input name="user.other" />);
     expect(otherInput.find(TextInput).props().value).toEqual(undefined);
   });
 
