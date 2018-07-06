@@ -1,11 +1,12 @@
 import { compose, mapProps } from "recompose";
+import _ from 'lodash';
+
 import withFormik from "./withFormik";
-import { selectValue } from './utils';
 
 const withError = compose(
   withFormik,
   mapProps(({ formik: { touched }, name, ...props }) => ({
-    touched: selectValue(touched, name),
+    touched: _.get(touched, name),
     ...props,
     name
   }))
