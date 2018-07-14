@@ -1,6 +1,3 @@
-import { getContext } from "recompose";
-import PropTypes from "prop-types";
+import { connect } from 'formik';
 
-const withFormik = getContext({ formik: PropTypes.object });
-
-export default withFormik;
+export default connect;
