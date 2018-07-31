@@ -5,26 +5,25 @@ import { TextInput } from "react-native";
 import { mount } from "enzyme";
 
 import { makeReactNativeField } from "../..";
+import withFormikMock from "../testUtils/withFormikMock";
 
 console.error = jest.fn();
 
 const setFieldValue = jest.fn();
 const setFieldTouched = jest.fn();
 
-const withFormikMock = withContext({ formik: PropTypes.object }, () => ({
-  formik: {
-    setFieldValue,
-    setFieldTouched,
-    values: {
-      email: "contact@bam.tech",
-      user: {
-        username: "bam-dev",
-        password: 'goodchallenge',
-      }
+const formikContext = {
+  setFieldValue,
+  setFieldTouched,
+  values: {
+    email: "contact@bam.tech",
+    user: {
+      username: "bam-dev",
+      password: 'goodchallenge',
     }
   }
-}));
-const Input = compose(withFormikMock, makeReactNativeField)(TextInput);
+};
+const Input = compose(withFormikMock(formikContext), makeReactNativeField)(TextInput);
 
 describe("makeReactNativeField", () => {
   it("sets the input value", () => {

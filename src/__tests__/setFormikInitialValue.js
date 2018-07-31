@@ -5,6 +5,7 @@ import { TextInput } from "react-native";
 import { mount } from "enzyme";
 
 import { setFormikInitialValue } from "../..";
+import withFormikMock from "../testUtils/withFormikMock";
 
 console.error = jest.fn();
 
@@ -14,15 +15,14 @@ let Input;
 beforeEach(() => {
   setFieldValue = jest.fn();
 
-  const withFormikMock = withContext({ formik: PropTypes.object }, () => ({
-    formik: {
-      setFieldValue,
-      values: {
-        "this input has been set by formik": "set value"
-      }
+  const formikContext = {
+    setFieldValue,
+    values: {
+      "this input has been set by formik": "set value"
     }
-  }));
-  Input = compose(withFormikMock, setFormikInitialValue)(TextInput);
+  };
+
+  Input = compose(withFormikMock(formikContext), setFormikInitialValue)(TextInput);
 });
 
 describe("setFormikInitialValue", () => {

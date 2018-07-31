@@ -5,20 +5,23 @@ import { TextInput } from "react-native";
 import { mount } from "enzyme";
 
 import { withTouched } from "../..";
+import withFormikMock from "../testUtils/withFormikMock";
 
 console.error = jest.fn();
 
-const withFormikMock = withContext({ formik: PropTypes.object }, () => ({
-  formik: {
-    touched: {
-      email: true,
-      user: {
-        username: true,
-      }
+const formikContext = {
+  touched: {
+    email: true,
+    user: {
+      username: true
     }
   }
-}));
-const Input = compose(withFormikMock, withTouched)(TextInput);
+};
+
+const Input = compose(
+  withFormikMock(formikContext),
+  withTouched
+)(TextInput);
 
 describe("withTouched", () => {
   it("sets the touched prop", () => {

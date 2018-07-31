@@ -1,5 +1,4 @@
 import React from "react";
-import { compose, mapProps } from "recompose";
 import PropTypes from "prop-types";
 import { isArray } from "lodash";
 import withFormik from "./withFormik";
@@ -12,7 +11,7 @@ const withNextInputAutoFocusContextType = {
 
 const getInputs = children =>
   (isArray(children) ? children : [children]).reduce((partialInputs, child) => {
-    if (child.props && child.props.children) {
+    if (child && child.props && child.props.children) {
       return partialInputs.concat(getInputs(child.props.children));
     }
     if (child && child.props && !!child.props.name) return partialInputs.concat(child);
@@ -22,12 +21,11 @@ const getInputs = children =>
 export const withNextInputAutoFocusForm = WrappedComponent => {
   class WithNextInputAutoFocusForm extends React.PureComponent {
     static childContextTypes = withNextInputAutoFocusContextType;
-    static contextTypes = { formik: PropTypes.object };
 
     constructor(props) {
       super(props);
       const { children } = props;
-      this.inputs = getInputs(children);
+      this.inputs = getInputs(children || []);
     }
 
     inputs;
@@ -46,7 +44,7 @@ export const withNextInputAutoFocusForm = WrappedComponent => {
         const isLastInput = inputPosition === this.inputs.length - 1;
 
         if (isLastInput) {
-          this.context.formik.submitForm();
+          this.props.formik.submitForm();
         } else {
           const nextInputs = this.inputs.slice(inputPosition + 1);
           const nextFocusableInput = nextInputs.find(
@@ -70,7 +68,7 @@ export const withNextInputAutoFocusForm = WrappedComponent => {
     }
   }
 
-  return WithNextInputAutoFocusForm;
+  return withFormik(WithNextInputAutoFocusForm);
 };
 
 export const withNextInputAutoFocusInput = Input => {
