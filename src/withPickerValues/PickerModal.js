@@ -1,12 +1,12 @@
 // @flow
-import React, { PureComponent } from 'react';
-import { View, Platform, Picker } from 'react-native';
+import React, { PureComponent } from "react";
+import { View, Platform, Picker } from "react-native";
 
-import KeyboardModal from './KeyboardModal';
-import DisableKeyboard from './DisableKeyboard';
+import KeyboardModal from "./KeyboardModal";
+import DisableKeyboard from "./DisableKeyboard";
 
 type PropsType = {
-  values: Array<{ label: string, value: string }>,
+  values: Array<{ label: string, value: string }>
 };
 
 class PickerModal extends PureComponent<PropsType> {
@@ -25,19 +25,21 @@ class PickerModal extends PureComponent<PropsType> {
     const { placeholder, value } = this.props;
     if (!this.props.values || !this.props.values.length) return null;
     const values = [...this.props.values];
-    if (Platform.OS === 'ios') {
-      values.unshift({ value: '', label: placeholder || '' });
+    if (Platform.OS === "ios") {
+      values.unshift({ value: "", label: placeholder || "" });
     } else {
       // Fix for issue: https://github.com/facebook/react-native/issues/15556
-      values.unshift({ value: '', label: '' });
+      values.unshift({ value: "", label: "" });
     }
     const picker = (
       <Picker onValueChange={this.onValueChange} selectedValue={value} prompt={placeholder}>
-        {values.map(item => <Picker.Item key={item.value} {...item} />)}
+        {values.map(item => (
+          <Picker.Item key={item.value} {...item} />
+        ))}
       </Picker>
     );
 
-    return Platform.OS === 'ios' ? (
+    return Platform.OS === "ios" ? (
       <KeyboardModal
         ref={ref => {
           this.pickerModal = ref;
@@ -49,11 +51,11 @@ class PickerModal extends PureComponent<PropsType> {
       <View
         style={{
           opacity: 0,
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           bottom: 0,
           right: 0,
-          left: 0,
+          left: 0
         }}
       >
         {picker}

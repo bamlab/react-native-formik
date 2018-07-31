@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { compose, withContext } from "recompose";
+import { compose } from "recompose";
 import { TextInput } from "react-native";
 import { mount } from "enzyme";
 
@@ -17,7 +16,10 @@ const formikContext = {
     }
   }
 };
-const Input = compose(withFormikMock(formikContext), withError)(TextInput);
+const Input = compose(
+  withFormikMock(formikContext),
+  withError
+)(TextInput);
 
 describe("withError", () => {
   it("sets the error prop", () => {
@@ -27,7 +29,7 @@ describe("withError", () => {
     expect(validInput.find(TextInput).props().error).toBeFalsy();
   });
 
-  it('sets the error prop for nested key name', () => {
+  it("sets the error prop for nested key name", () => {
     const emailInput = mount(<Input name="user.password" />);
     expect(emailInput.find(TextInput).props().error).toEqual("Password is too short!");
     const otherInput = mount(<Input name="user.username" />);

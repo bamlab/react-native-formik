@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { compose, withContext } from "recompose";
+import { compose } from "recompose";
 import { TextInput } from "react-native";
 import { mount } from "enzyme";
 
@@ -22,12 +21,15 @@ beforeEach(() => {
     }
   };
 
-  Input = compose(withFormikMock(formikContext), setFormikInitialValue)(TextInput);
+  Input = compose(
+    withFormikMock(formikContext),
+    setFormikInitialValue
+  )(TextInput);
 });
 
 describe("setFormikInitialValue", () => {
   it("sets the initial value to ''", () => {
-    const touchedInput = mount(<Input name="inputName" />);
+    mount(<Input name="inputName" />);
     expect(setFieldValue).toBeCalledWith("inputName", "");
   });
 
@@ -37,7 +39,7 @@ describe("setFormikInitialValue", () => {
   });
 
   it("does not set initial value if set by formik, e.g. with initial values", () => {
-    const wrapper = mount(<Input name="this input has been set by formik" />);
-    expect(setFieldValue).not.toBeCalled()
+    mount(<Input name="this input has been set by formik" />);
+    expect(setFieldValue).not.toBeCalled();
   });
 });

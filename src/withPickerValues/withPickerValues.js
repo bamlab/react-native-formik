@@ -1,7 +1,7 @@
 // @flow
 
-import React from 'react';
-import PickerModal from './PickerModal';
+import React from "react";
+import PickerModal from "./PickerModal";
 
 const withPickerModal = Component => {
   class WithPickerModal extends React.Component<$FlowFixMeProps, $FlowFixMeState> {
@@ -12,7 +12,7 @@ const withPickerModal = Component => {
           : undefined;
       return (
         <PickerModal {...this.props}>
-          <Component {...this.props} value={selectedItem ? selectedItem.label : ''} />
+          <Component {...this.props} value={selectedItem ? selectedItem.label : ""} />
         </PickerModal>
       );
     }

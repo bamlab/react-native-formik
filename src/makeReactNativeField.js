@@ -1,5 +1,5 @@
 import { compose, mapProps } from "recompose";
-import _ from 'lodash';
+import _ from "lodash";
 
 import withFormik from "./withFormik";
 
