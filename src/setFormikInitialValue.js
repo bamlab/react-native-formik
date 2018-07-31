@@ -1,5 +1,5 @@
 import React from "react";
-import { compose, mapProps } from "recompose";
+import { compose } from "recompose";
 import { has } from "lodash";
 import withFormik from "./withFormik";
 
@@ -20,4 +20,7 @@ const setFormikInitialValue = WrappedInput => {
   };
 };
 
-export default compose(withFormik, setFormikInitialValue);
+export default compose(
+  withFormik,
+  setFormikInitialValue
+);

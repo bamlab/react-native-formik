@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { compose, withContext } from "recompose";
+import { compose } from "recompose";
 import { TextInput } from "react-native";
 import { mount } from "enzyme";
 
@@ -19,11 +18,14 @@ const formikContext = {
     email: "contact@bam.tech",
     user: {
       username: "bam-dev",
-      password: 'goodchallenge',
+      password: "goodchallenge"
     }
   }
 };
-const Input = compose(withFormikMock(formikContext), makeReactNativeField)(TextInput);
+const Input = compose(
+  withFormikMock(formikContext),
+  makeReactNativeField
+)(TextInput);
 
 describe("makeReactNativeField", () => {
   it("sets the input value", () => {
@@ -33,7 +35,7 @@ describe("makeReactNativeField", () => {
     expect(otherInput.find(TextInput).props().value).toEqual(undefined);
   });
 
-  it('sets the input value for nested key name', () => {
+  it("sets the input value for nested key name", () => {
     const emailInput = mount(<Input name="user.username" />);
     expect(emailInput.find(TextInput).props().value).toEqual("bam-dev");
     const otherInput = mount(<Input name="user.other" />);

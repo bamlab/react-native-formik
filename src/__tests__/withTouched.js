@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { compose, withContext } from "recompose";
+import { compose } from "recompose";
 import { TextInput } from "react-native";
 import { mount } from "enzyme";
 

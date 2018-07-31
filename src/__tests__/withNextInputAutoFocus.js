@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { compose, withContext } from "recompose";
+import { compose } from "recompose";
 import { Button, View } from "react-native";
 import { mount } from "enzyme";
 
@@ -9,9 +8,12 @@ import withFormikMock from "../testUtils/withFormikMock";
 
 const submitForm = jest.fn();
 
-const Form = compose(withFormikMock({
-  submitForm
-}), withNextInputAutoFocusForm)(View);
+const Form = compose(
+  withFormikMock({
+    submitForm
+  }),
+  withNextInputAutoFocusForm
+)(View);
 
 const focusInput = jest.fn();
 class TextInput extends React.PureComponent {
@@ -63,11 +65,7 @@ describe("withNextInputAutoFocus", () => {
     const onSubmitEditing = jest.fn();
     const wrapper = mount(
       <Form>
-        <Input
-          name="first"
-          returnKeyType="correct value"
-          onSubmitEditing={onSubmitEditing}
-        />
+        <Input name="first" returnKeyType="correct value" onSubmitEditing={onSubmitEditing} />
       </Form>
     );
 

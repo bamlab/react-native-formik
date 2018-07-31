@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "index.d.ts",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "eslint index.js src && jest --coverage",
     "commitmsg": "validate-commit-msg",
     "commit": "git-cz",
     "semantic-release": "semantic-release",
@@ -43,9 +43,12 @@
     "cz-conventional-changelog": "^2.1.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.0.0",
+    "eslint": "^5.2.0",
+    "eslint-config-bambi": "^1.4.0",
     "formik": "^1.0.2",
     "husky": "^0.14.3",
     "jest": "^22.4.2",
+    "prettier": "^1.14.0",
     "react": "16.2.0",
     "react-dom": "16.2.0",
     "react-native": "0.53.0",
@@ -60,5 +63,11 @@
   },
   "peerDependencies": {
     "formik": ">= 0.11.x < 2"
+  },
+  "eslintConfig": {
+    "extends": "bambi/native",
+    "rules": {
+      "no-unused-vars": "error"
+    }
   }
 }

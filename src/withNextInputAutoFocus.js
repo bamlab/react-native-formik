@@ -32,8 +32,7 @@ export const withNextInputAutoFocusForm = WrappedComponent => {
     inputNameMap;
     inputRefs = {};
 
-    getInputPosition = name =>
-      this.inputs.findIndex(input => input.props.name === name);
+    getInputPosition = name => this.inputs.findIndex(input => input.props.name === name);
 
     getChildContext = () => ({
       setInput: (name, component) => {
@@ -48,9 +47,7 @@ export const withNextInputAutoFocusForm = WrappedComponent => {
         } else {
           const nextInputs = this.inputs.slice(inputPosition + 1);
           const nextFocusableInput = nextInputs.find(
-            element =>
-              this.inputRefs[element.props.name] &&
-              this.inputRefs[element.props.name].focus
+            element => this.inputRefs[element.props.name] && this.inputRefs[element.props.name].focus
           );
           this.inputRefs[nextFocusableInput.props.name].focus();
         }
@@ -72,10 +69,7 @@ export const withNextInputAutoFocusForm = WrappedComponent => {
 };
 
 export const withNextInputAutoFocusInput = Input => {
-  class WithNextInputAutoFocusInput extends React.Component<
-    $FlowFixMeProps,
-    $FlowFixMeState
-  > {
+  class WithNextInputAutoFocusInput extends React.Component<$FlowFixMeProps, $FlowFixMeState> {
     static contextTypes = withNextInputAutoFocusContextType;
 
     setInput = component => {
