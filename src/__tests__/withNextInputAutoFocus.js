@@ -5,15 +5,13 @@ import { Button, View } from "react-native";
 import { mount } from "enzyme";
 
 import { withNextInputAutoFocusForm, withNextInputAutoFocusInput } from "../..";
+import withFormikMock from "../testUtils/withFormikMock";
 
 const submitForm = jest.fn();
-const withFormikMock = withContext({ formik: PropTypes.object }, () => ({
-  formik: {
-    submitForm
-  }
-}));
 
-const Form = compose(withFormikMock, withNextInputAutoFocusForm)(View);
+const Form = compose(withFormikMock({
+  submitForm
+}), withNextInputAutoFocusForm)(View);
 
 const focusInput = jest.fn();
 class TextInput extends React.PureComponent {

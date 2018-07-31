@@ -5,20 +5,19 @@ import { TextInput } from "react-native";
 import { mount } from "enzyme";
 
 import { withError } from "../..";
+import withFormikMock from "../testUtils/withFormikMock";
 
 console.error = jest.fn();
 
-const withFormikMock = withContext({ formik: PropTypes.object }, () => ({
-  formik: {
-    errors: {
-      email: "This is not a valid email.",
-      user: {
-        password: "Password is too short!"
-      }
+const formikContext = {
+  errors: {
+    email: "This is not a valid email.",
+    user: {
+      password: "Password is too short!"
     }
   }
-}));
-const Input = compose(withFormikMock, withError)(TextInput);
+};
+const Input = compose(withFormikMock(formikContext), withError)(TextInput);
 
 describe("withError", () => {
   it("sets the error prop", () => {
