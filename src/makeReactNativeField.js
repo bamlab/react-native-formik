@@ -5,7 +5,7 @@ import withFormik from "./withFormik";
 
 const makeReactNativeField = compose(
   withFormik,
-  mapProps(({ formik: { setFieldValue, setFieldTouched, values }, name, ...props }) => ({
+  mapProps(({ formik: { setFieldValue, setFieldTouched, values, isSubmitting }, name, ...props }) => ({
     value: _.get(values, name),
     ...props,
     name,
@@ -14,7 +14,9 @@ const makeReactNativeField = compose(
       if (props.onChangeText) props.onChangeText(text);
     },
     onBlur: () => {
-      setFieldTouched(name);
+      // validate onBlur only while not submitting
+      // this prevents validating twice in succession when clicking 'done' on keyboard - first onSubmitEditing, then onBlur
+      setFieldTouched(name, true, isSubmitting ? false : true);
       if (props.onBlur) props.onBlur();
     }
   }))
