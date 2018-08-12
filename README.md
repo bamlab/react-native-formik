@@ -7,6 +7,7 @@ This repository is a set of high order components designed to help you take cont
 **Features**
 
 * Easily composable set of helpers
+* Easily connect your [React Native Formik Standard Component](./doc/react-native-formik-standard-component.md) to the formik context
 * Connects your React Native input to Formik with no boilerplate (See `makeReactNativeField`)
 * Add a `type` prop on your TextInput to take care of the input options based on the type (See `withInputTypeProps`)
 * Automatically focus the next input (See `withNextInputAutoFocus`)
@@ -14,6 +15,7 @@ This repository is a set of high order components designed to help you take cont
 **Table of contents**
 
 * [Installation](#installation)
+* [The Gist](#the-gist)
 * [Advanced Example](#advanced-example)
 * [Formatting inputs](#formatting-inputs)
 * [API](#api)
@@ -31,6 +33,118 @@ This repository is a set of high order components designed to help you take cont
 
 ```shell
 yarn add formik react-native-formik
+```
+
+## The Gist (with common use cases)
+
+Once you designed `FocusableStandardRNFormikFieldComponent` and `StandardRNFormikFieldComponent` which respects the [React Native Formik Standard Component](./doc/react-native-formik-standard-component.md), here is an example to use those fields.
+
+```js
+// lib/Form.js
+```
+```js
+import { compose } from 'recompose';
+import { View } from 'react-native';
+import {
+  withFormikControl,
+  withNextInputAutoFocusForm,
+  withNextInputAutoFocusInput,
+} from 'react-native-formik';
+
+import FocusableStandardRNFormikFieldComponent from 'app/src/components/FocusableStandardRNFormikField';
+
+import StandardRNFormikFieldComponent from 'app/src/components/StandardRNFormikField';
+
+const Container = withNextInputAutoFocusForm(View);
+const FocusableStandardRNFormikField = compose(
+  withNextInputAutoFocusInput,
+  withFormikControl(FocusableStandardRNFormikFieldComponent),
+);
+const StandardRNFormikField = withFormikControl(StandardRNFormikFieldComponent);
+
+export default {
+  Container,
+  FocusableStandardRNFormikField,
+  StandardRNFormikField,
+};
+```
+```js
+// pages/one_form.js
+```
+```js
+import React, { Component } from 'react';
+import { View, StyleSheet, TouchableHighlight, Text } from 'react-native';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import Form from 'app/src/lib/Form';
+
+class OneForm extends Component {
+  validationSchema = Yup.object().shape({
+    firstNumber: Yup.number().required('required!'),
+    secondNumber: Yup.number().required('required!'),
+    comments: Yup.string().when('secondNumber', {
+      is: OneForm.shouldDisplayCommentsField,
+      then: Yup.string().required('required because second number is less than 5!'),
+    }), // Dynamic validation
+    email: Yup.string()
+      .required('required mate!')
+      .email("This is not an email")
+      .test(
+        'alreadyExists',
+        "This email already exists in our database :(",
+        value =>
+          value &&
+          new Promise(resolve => {
+            setTimeout(() => {
+              resolve(value && value.endsWith('exists'));
+            }, 2000);
+          }) // This asynchronouly validate the data
+      ),
+  });
+
+  static shouldDisplayCommentsField = secondNumber => secondNumber && secondNumber < 5;
+
+  renderForm = ({ values, handleSubmit }) => (
+    <Form.Container style={styles.page}>
+      <Form.FocusableStandardRNFormikField name="email" />
+      <Form.StandardRNFormikFieldComponent name="firstNumber" />
+      <Form.StandardRNFormikFieldComponent name="secondNumber" />
+      
+      {OneForm.shouldDisplayCommentsField(values.secondNumber) && (
+        <Form.StandardRNFormikFieldComponent name="comments" />
+      )} // Dynamic field rendering
+      <TouchableHighlight onPress={handleSubmit}>
+        <Text style={styles.submitButton}>OK</Text>
+      </TouchableHighlight>
+    </Form.Container>
+  );
+
+  render() {
+    return (
+      <Formik
+        onSubmit={values => console.log(values)}
+        validationSchema={this.validationSchema}
+        render={this.renderForm}
+      />
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  page: {
+    backgroundColor: 'white',
+    flex: 1,
+    padding: 8,
+  },
+  submitButton: {
+    backgroundColor: 'blue',
+    textAlign: 'center',
+    padding: 4,
+    color: 'white',
+  },
+});
+
+export default OneForm;
 ```
 
 ## Advanced Example

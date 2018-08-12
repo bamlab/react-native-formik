@@ -20,6 +20,12 @@ export interface withTouchedProps {
   name: string;
 }
 
+export interface withFormikControlProps {
+  error?: string;
+  value: string;
+  onChange: string;
+}
+
 export type makeInputGreatAgainProps = makeReactNativeFieldProps &
   setFormikInitialValueProps &
   withInputTypePropsProps &
@@ -63,6 +69,10 @@ export function withTouched<Props>(
 ): React.ComponentClass<Props & withTouchedProps>;
 
 export function makeInputGreatAgain<Props>(
+  WrappedComponent: React.ComponentType<Props>
+): React.ComponentClass<Props & makeInputGreatAgainProps>;
+
+export function withFormikControl<Props>(
   WrappedComponent: React.ComponentType<Props>
 ): React.ComponentClass<Props & makeInputGreatAgainProps>;
 
