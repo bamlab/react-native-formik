@@ -16,7 +16,7 @@ const makeReactNativeField = compose(
     onBlur: () => {
       // validate onBlur only while not submitting
       // this prevents validating twice in succession when clicking 'done' on keyboard - first onSubmitEditing, then onBlur
-      setFieldTouched(name, true, isSubmitting ? false : true);
+      setFieldTouched(name, true, !isSubmitting);
       if (props.onBlur) props.onBlur();
     }
   }))
