@@ -62,13 +62,30 @@ describe("makeReactNativeField", () => {
     expect(setFieldValue).toHaveBeenCalledWith("email", "New text");
   });
 
-  it("handles input touch event", () => {
+  it("handles input touch event to set field as touched and validate", () => {
     const wrapper = mount(<Input name="email" />);
     wrapper
       .find(TextInput)
       .props()
       .onBlur();
-    expect(setFieldTouched).toHaveBeenCalledWith("email");
+    expect(setFieldTouched).toHaveBeenCalledWith("email", true, true);
+  });
+
+  it("does not validate on field blur if form is submitting", () => {
+    const formikContextSubmitting = {
+      setFieldTouched,
+      isSubmitting: true
+    };
+    const InputInSubmittingForm = compose(
+      withFormikMock(formikContextSubmitting),
+      makeReactNativeField
+    )(TextInput);
+    const wrapper = mount(<InputInSubmittingForm name="email" />);
+    wrapper
+      .find(TextInput)
+      .props()
+      .onBlur();
+    expect(setFieldTouched).toHaveBeenCalledWith("email", true, false);
   });
 
   it("allows override of onBlur", () => {
@@ -78,7 +95,7 @@ describe("makeReactNativeField", () => {
       .find(TextInput)
       .props()
       .onBlur();
-    expect(setFieldTouched).toHaveBeenCalledWith("email");
+    expect(setFieldTouched).toHaveBeenCalledWith("email", true, true);
     expect(onBlur).toHaveBeenCalled();
   });
 });
