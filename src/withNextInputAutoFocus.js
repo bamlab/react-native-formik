@@ -18,7 +18,7 @@ const getInputs = children =>
     return partialInputs;
   }, []);
 
-export const withNextInputAutoFocusForm = WrappedComponent => {
+export const withNextInputAutoFocusForm = (WrappedComponent, { submitAfterLastInput } = { submitAfterLastInput: true }) => {
   class WithNextInputAutoFocusForm extends React.PureComponent {
     static childContextTypes = withNextInputAutoFocusContextType;
 
@@ -43,7 +43,7 @@ export const withNextInputAutoFocusForm = WrappedComponent => {
         const isLastInput = inputPosition === this.inputs.length - 1;
 
         if (isLastInput) {
-          this.props.formik.submitForm();
+          if (submitAfterLastInput) this.props.formik.submitForm();
         } else {
           const nextInputs = this.inputs.slice(inputPosition + 1);
           const nextFocusableInput = nextInputs.find(
