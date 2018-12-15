@@ -30,7 +30,9 @@ const Input = compose(
 describe("makeReactNativeField", () => {
   it("sets the input value", () => {
     const emailInput = mount(<Input name="email" />);
-    expect(emailInput.find(TextInput).props().value).toEqual("contact@bam.tech");
+    expect(emailInput.find(TextInput).props().value).toEqual(
+      "contact@bam.tech"
+    );
     const otherInput = mount(<Input name="other" />);
     expect(otherInput.find(TextInput).props().value).toEqual(undefined);
   });

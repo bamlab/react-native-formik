@@ -32,7 +32,11 @@ class PickerModal extends PureComponent<PropsType> {
       values.unshift({ value: "", label: "" });
     }
     const picker = (
-      <Picker onValueChange={this.onValueChange} selectedValue={value} prompt={placeholder}>
+      <Picker
+        onValueChange={this.onValueChange}
+        selectedValue={value}
+        prompt={placeholder}
+      >
         {values.map(item => (
           <Picker.Item key={item.value} {...item} />
         ))}
@@ -66,7 +70,9 @@ class PickerModal extends PureComponent<PropsType> {
   render() {
     return (
       <View>
-        <DisableKeyboard onPress={this.openPicker}>{this.props.children}</DisableKeyboard>
+        <DisableKeyboard onPress={this.openPicker}>
+          {this.props.children}
+        </DisableKeyboard>
         {this.renderPicker()}
       </View>
     );

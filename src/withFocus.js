@@ -17,7 +17,14 @@ const withFocusProp = WrappedInput => {
     };
 
     render() {
-      return <WrappedInput focused={this.state.focused} {...this.props} onBlur={this.onBlur} onFocus={this.onFocus} />;
+      return (
+        <WrappedInput
+          focused={this.state.focused}
+          {...this.props}
+          onBlur={this.onBlur}
+          onFocus={this.onFocus}
+        />
+      );
     }
   };
 };

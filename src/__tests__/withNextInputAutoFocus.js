@@ -65,7 +65,11 @@ describe("withNextInputAutoFocus", () => {
     const onSubmitEditing = jest.fn();
     const wrapper = mount(
       <Form>
-        <Input name="first" returnKeyType="correct value" onSubmitEditing={onSubmitEditing} />
+        <Input
+          name="first"
+          returnKeyType="correct value"
+          onSubmitEditing={onSubmitEditing}
+        />
       </Form>
     );
 
