@@ -19,7 +19,11 @@ describe("withInputTypeProps", () => {
     expect(withoutType.find(TextInput).props().someProp).toEqual("someValue");
     const withType = mount(<Input type="email" someProp="someValue" />);
     expect(withType.find(TextInput).props().someProp).toEqual("someValue");
-    const withUnknownType = mount(<Input type="unknown" someProp="someValue" />);
-    expect(withUnknownType.find(TextInput).props().someProp).toEqual("someValue");
+    const withUnknownType = mount(
+      <Input type="unknown" someProp="someValue" />
+    );
+    expect(withUnknownType.find(TextInput).props().someProp).toEqual(
+      "someValue"
+    );
   });
 });

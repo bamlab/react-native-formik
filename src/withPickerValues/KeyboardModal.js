@@ -17,7 +17,10 @@ const renderModal = (props: PropsType, open: ?boolean) => (
     position="bottom"
     moveAboveKeyboard={false}
     isOpen={open}
-    style={[{ height: 216, backgroundColor: "rgb(200, 203, 211)" }, props.style]}
+    style={[
+      { height: 216, backgroundColor: "rgb(200, 203, 211)" },
+      props.style
+    ]}
     easing={props.easingAnimation}
   >
     {props.children}
@@ -32,7 +35,8 @@ let currentProps;
 
 const updateKeyboardModalComponent = (props: PropsType, open: ?boolean) => {
   if (open) currentProps = props;
-  if (keyboardModalInstance) keyboardModalInstance.update(renderModal(props, open));
+  if (keyboardModalInstance)
+    keyboardModalInstance.update(renderModal(props, open));
 };
 
 const open = (keyboardComponent: any) => {
@@ -54,7 +58,10 @@ const createKeyboardModalComponent = (props: PropsType) => {
   currentProps = props;
 
   keyboardModalInstance = new RootSiblings(renderModal(props));
-  keyboardDidShowListener = Keyboard.addListener("keyboardWillShow", keyboardDidShow);
+  keyboardDidShowListener = Keyboard.addListener(
+    "keyboardWillShow",
+    keyboardDidShow
+  );
 };
 
 const removeKeyboardModalComponent = () => {
