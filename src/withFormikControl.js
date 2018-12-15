@@ -1,15 +1,25 @@
-import { withProps, compose } from "recompose";
-import { withFormik } from "./withFormik";
+import { mapProps, compose } from "recompose";
+import { connect } from "formik";
+import { get } from "lodash";
+import withErrorIfNeeded from "./withErrorIfNeeded";
 
 const withFormikControl = compose(
-  withFormik,
-  withProps(ownProps => ({
-    error: ownProps.formik.submitCount
-      ? ownProps.formik.errors[ownProps.name]
-      : undefined,
-    value: ownProps.formik.values[ownProps.name],
-    onChange: value => ownProps.formik.setFieldValue(ownProps.name, value)
-  }))
+  withErrorIfNeeded,
+  connect,
+  mapProps(
+    ({
+      formik: { values, setFieldValue, setFieldTouched },
+      name,
+      ...props
+    }) => ({
+      value: get(values, name),
+      setFieldValue: (value, ...args) => setFieldValue(name, value, ...args),
+      setFieldTouched: (value, ...args) =>
+        setFieldTouched(name, value, ...args),
+      name,
+      ...props
+    })
+  )
 );
 
 export default withFormikControl;
