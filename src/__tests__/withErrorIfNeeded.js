@@ -3,7 +3,7 @@ import { compose } from "recompose";
 import { TextInput } from "react-native";
 import { mount } from "enzyme";
 
-import { withErrorNew as withErrorIfNeeded } from "../..";
+import { withErrorIfNeeded } from "../..";
 import withFormikMock from "../testUtils/withFormikMock";
 
 console.error = jest.fn();
