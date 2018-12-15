@@ -10,17 +10,14 @@ This repository is a set of high order components designed to help you take cont
 - Connects your React Native input to Formik with no boilerplate (See `handleTextInput`)
 - Add a `type` prop on your TextInput to take care of the input options based on the type (See `withInputTypeProps`)
 - Automatically focus the next input (See `withNextInputAutoFocus`)
-- Component agnostic: Handle any other form component you would like with `withFormikControl`
+- Component agnostic: Handle any other form component with any design with `withFormikControl`
 
 The point is to make your forms easy to write and provide features your users will expect with code as small as:
 
 ```javascript
 <MyInput label="Email" name="email" type="email" />
 <MyInput label="Password" name="password" type="password" />
-<Switch
-  label="If you like the repo, have you starred it 😁?"
-  name="star"
-/>
+<Switch label="Accept terms and conditions" name="accepted" />
 <DatePicker label="Birthday" name="birthday" />
 <Button onPress={props.handleSubmit} title="SUBMIT" />
 ```
@@ -33,12 +30,12 @@ The point is to make your forms easy to write and provide features your users wi
   - [Custom components](#custom-components)
   - [Formatting inputs](#formatting-inputs)
   - [Move form above keyboard](#move-form-above-keyboard)
+  - [Step by step formik + react-native-formik integration](./doc/formik_step_by_step.md)
 - [API](#api)
-  - [makeReactNativeField](#makereactnativefield)
-  - [setFormikInitialValue](#setFormikInitialValue)
+  - [handleTextInput](#handleTextInput)
+  - [withErrorIfNeeded](#withErrorIfNeeded)
   - [withError](#witherror)
   - [withFocus](#withfocus)
-  - [withFormik](#withformik)
   - [withInputTypeProps](#withinputtypeprops)
   - [withNextInputAutoFocus](#withnextinputautofocus)
   - [withTouched](#withtouched)
@@ -345,82 +342,18 @@ Enjoy your life :
 
 ## API
 
-### makeReactNativeField
+### withFormikControl
 
-Connects your React Native component to the Formik context:
+See [usage](#Custom-components)
 
-- its value will be set
-- it will send `onChangeText` and `onBlur` events to Formik
+### handleTextInput
 
-Now you only need this code:
+A set of default HOC to manage TextInputs.
+Includes `withErrorIfNeeded`, `withInputTypeProps` and `withFormikControl` remapped for specifically for the React Native `TextInput`
 
-```javascript
-import React from "react";
-import { TextInput, View } from "react-native";
-import { Formik } from "formik";
-import { makeReactNativeField } from "react-native-formik";
+### withErrorIfNeeded
 
-const MyInput = makeReactNativeField(TextInput);
-
-export default props => {
-  return (
-    <Formik
-      onSubmit={values => console.log(values)}
-      render={props => {
-        return (
-          <View>
-            <MyInput name="email" />
-            <MyInput name="password" />
-          </View>
-        );
-      }}
-    />
-  );
-};
-```
-
-instead of:
-
-```javascript
-import React from "react";
-import { TextInput, View } from "react-native";
-import { Formik } from "formik";
-import { makeReactNativeField } from "react-native-formik";
-
-const MyInput = makeReactNativeField(TextInput);
-
-export default props => {
-  return (
-    <Formik
-      onSubmit={values => console.log(values)}
-      render={props => {
-        return (
-          <View>
-            <MyInput
-              name="email"
-              value={props.value.email}
-              onChangeText={text => props.setFieldValue("email", text)}
-              onBlur={() => setFieldTouched("email")}
-            />
-            <MyInput
-              name="password"
-              value={props.value.email}
-              onChangeText={text => props.setFieldValue("password", text)}
-              onBlur={() => setFieldTouched("password")}
-            />
-          </View>
-        );
-      }}
-    />
-  );
-};
-```
-
-### setFormikInitialValue
-
-Set Input initial value to `""` to Formik without having to use `initialValues` prop.
-
-Especially it allows validation of untouched inputs when pressing submit.
+Pass in the Formik error for the input as a prop, only if input has been touched or the form has been submitted
 
 ### withError
 
@@ -429,10 +362,6 @@ Pass in the Formik error for the input as a prop.
 ### withFocus
 
 Add a `focused` prop to the input depending on its focus state.
-
-### withFormik
-
-Pass Formik context as a prop to any component.
 
 ### withInputTypeProps
 
