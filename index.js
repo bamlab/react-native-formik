@@ -1,14 +1,20 @@
 import { compose } from "recompose";
+import handleTextInput from "./src/handleTextInput";
 import setFormikInitialValue from "./src/setFormikInitialValue";
 import withError from "./src/withError";
+import withErrorIfNeeded from "./src/withErrorIfNeeded";
 import withFocus from "./src/withFocus";
 import withFormik from "./src/withFormik";
+import withFormikControl from "./src/withFormikControl";
 import withInputTypeProps from "./src/withInputTypeProps";
 import withTouched from "./src/withTouched";
 import withPickerValues from "./src/withPickerValues";
 import KeyboardModal from "./src/withPickerValues/KeyboardModal";
 import makeReactNativeField from "./src/makeReactNativeField";
-import { withNextInputAutoFocusForm, withNextInputAutoFocusInput } from "./src/withNextInputAutoFocus";
+import {
+  withNextInputAutoFocusForm,
+  withNextInputAutoFocusInput
+} from "./src/withNextInputAutoFocus";
 
 const makeInputsGreatAgain = compose(
   withInputTypeProps,
@@ -21,12 +27,15 @@ const makeInputsGreatAgain = compose(
 export default makeInputsGreatAgain;
 
 export {
+  handleTextInput,
   makeInputsGreatAgain,
   makeReactNativeField,
   setFormikInitialValue,
   withError,
+  withErrorIfNeeded,
   withFocus,
   withFormik,
+  withFormikControl,
   withInputTypeProps,
   withTouched,
   withNextInputAutoFocusForm,
