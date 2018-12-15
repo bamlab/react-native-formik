@@ -14,11 +14,15 @@ const getInputs = children =>
     if (child && child.props && child.props.children) {
       return partialInputs.concat(getInputs(child.props.children));
     }
-    if (child && child.props && !!child.props.name) return partialInputs.concat(child);
+    if (child && child.props && !!child.props.name)
+      return partialInputs.concat(child);
     return partialInputs;
   }, []);
 
-export const withNextInputAutoFocusForm = (WrappedComponent, { submitAfterLastInput } = { submitAfterLastInput: true }) => {
+export const withNextInputAutoFocusForm = (
+  WrappedComponent,
+  { submitAfterLastInput } = { submitAfterLastInput: true }
+) => {
   class WithNextInputAutoFocusForm extends React.PureComponent {
     static childContextTypes = withNextInputAutoFocusContextType;
 
@@ -32,7 +36,8 @@ export const withNextInputAutoFocusForm = (WrappedComponent, { submitAfterLastIn
     inputNameMap;
     inputRefs = {};
 
-    getInputPosition = name => this.inputs.findIndex(input => input.props.name === name);
+    getInputPosition = name =>
+      this.inputs.findIndex(input => input.props.name === name);
 
     getChildContext = () => ({
       setInput: (name, component) => {
@@ -40,16 +45,17 @@ export const withNextInputAutoFocusForm = (WrappedComponent, { submitAfterLastIn
       },
       handleSubmitEditing: name => {
         const inputPosition = this.getInputPosition(name);
-        const isLastInput = inputPosition === this.inputs.length - 1;
+        const nextInputs = this.inputs.slice(inputPosition + 1);
+        const nextFocusableInput = nextInputs.find(
+          element =>
+            this.inputRefs[element.props.name] &&
+            this.inputRefs[element.props.name].focus
+        );
 
-        if (isLastInput) {
-          if (submitAfterLastInput) this.props.formik.submitForm();
-        } else {
-          const nextInputs = this.inputs.slice(inputPosition + 1);
-          const nextFocusableInput = nextInputs.find(
-            element => this.inputRefs[element.props.name] && this.inputRefs[element.props.name].focus
-          );
+        if (nextFocusableInput) {
           this.inputRefs[nextFocusableInput.props.name].focus();
+        } else {
+          if (submitAfterLastInput) this.props.formik.submitForm();
         }
       },
       getReturnKeyType: name => {
@@ -69,7 +75,10 @@ export const withNextInputAutoFocusForm = (WrappedComponent, { submitAfterLastIn
 };
 
 export const withNextInputAutoFocusInput = Input => {
-  class WithNextInputAutoFocusInput extends React.Component<$FlowFixMeProps, $FlowFixMeState> {
+  class WithNextInputAutoFocusInput extends React.Component<
+    $FlowFixMeProps,
+    $FlowFixMeState
+  > {
     static contextTypes = withNextInputAutoFocusContextType;
 
     setInput = component => {
