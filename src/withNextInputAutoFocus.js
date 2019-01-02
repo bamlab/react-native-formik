@@ -10,7 +10,7 @@ const withNextInputAutoFocusContextType = {
 };
 
 const getInputs = children =>
-  (isArray(children) ? children : [children]).reduce((partialInputs, child) => {
+  React.Children.toArray(children).reduce((partialInputs, child) => {
     if (child && child.props && child.props.children) {
       return partialInputs.concat(getInputs(child.props.children));
     }
