@@ -76,4 +76,8 @@ export function withFormikControl<Props>(
   WrappedComponent: React.ComponentType<Props>
 ): React.ComponentClass<Props & makeInputGreatAgainProps>;
 
+export function handleTextInput<Props>(
+  WrappedComponent: React.ComponentType<Props>
+): React.ComponentClass<Props & makeInputGreatAgainProps>;
+
 export default makeInputGreatAgain;
