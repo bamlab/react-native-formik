@@ -52,7 +52,7 @@
     "jest": "23.6.0",
     "prettier": "^1.14.0",
     "react": "16.2.0",
-    "react-dom": "16.2.0",
+    "react-dom": "16.2.1",
     "react-native": "0.53.0",
     "semantic-release": "^15.9.3",
     "travis-deploy-once": "^5.0.1",
