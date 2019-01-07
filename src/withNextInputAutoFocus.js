@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { isArray } from "lodash";
 import withFormik from "./withFormik";
 
 const withNextInputAutoFocusContextType = {
@@ -10,7 +9,7 @@ const withNextInputAutoFocusContextType = {
 };
 
 const getInputs = children =>
-  (isArray(children) ? children : [children]).reduce((partialInputs, child) => {
+  React.Children.toArray(children).reduce((partialInputs, child) => {
     if (child && child.props && child.props.children) {
       return partialInputs.concat(getInputs(child.props.children));
     }
