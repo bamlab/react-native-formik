@@ -19,7 +19,8 @@ const formikContext = {
     user: {
       username: "bam-dev",
       password: "goodchallenge"
-    }
+    },
+    arrayValue: [{ name: "Name 0" }, { name: "Name 1" }]
   }
 };
 const Input = compose(
@@ -41,6 +42,13 @@ describe("makeReactNativeField", () => {
     const emailInput = mount(<Input name="user.username" />);
     expect(emailInput.find(TextInput).props().value).toEqual("bam-dev");
     const otherInput = mount(<Input name="user.other" />);
+    expect(otherInput.find(TextInput).props().value).toEqual(undefined);
+  });
+
+  it("sets the input value for nested array", () => {
+    const emailInput = mount(<Input name="arrayValue.1.name" />);
+    expect(emailInput.find(TextInput).props().value).toEqual("Name 1");
+    const otherInput = mount(<Input name="arrayValue.2.name" />);
     expect(otherInput.find(TextInput).props().value).toEqual(undefined);
   });
 
