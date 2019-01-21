@@ -12,6 +12,8 @@ const getInputs = children =>
   React.Children.toArray(children).reduce((partialInputs, child) => {
     if (child && child.props && child.props.children) {
       return partialInputs.concat(getInputs(child.props.children));
+    } else if (Array.isArray(child)) {
+      return getInputs(child);
     }
     if (child && child.props && !!child.props.name)
       return partialInputs.concat(child);
