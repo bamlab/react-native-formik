@@ -16,7 +16,7 @@ module.exports = {
       "lodash",
       "recompose",
       "@bam.tech/react-native-modalbox",
-      "@bam.tech/react-native-root-siblings",
+      "react-native-root-siblings",
       "@babel/runtime"
     ]
   }
