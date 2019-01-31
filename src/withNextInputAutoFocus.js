@@ -1,12 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import withFormik from "./withFormik";
+import React, { PureComponent } from "react";
 
-const withNextInputAutoFocusContextType = {
-  setInput: PropTypes.func,
-  handleSubmitEditing: PropTypes.func,
-  getReturnKeyType: PropTypes.func
-};
+import AutoFocusContext from "../contexts/autoFocusContext";
+import withFormik from "./withFormik";
 
 const getInputs = children =>
   React.Children.toArray(children).reduce((partialInputs, child) => {
@@ -22,84 +17,106 @@ export const withNextInputAutoFocusForm = (
   WrappedComponent,
   { submitAfterLastInput } = { submitAfterLastInput: true }
 ) => {
-  class WithNextInputAutoFocusForm extends React.PureComponent {
-    static childContextTypes = withNextInputAutoFocusContextType;
-
+  class WithNextInputAutoFocusForm extends PureComponent {
     constructor(props) {
       super(props);
       const { children } = props;
       this.inputs = getInputs(children || []);
+
+      this.getReturnKeyType = this.getReturnKeyType.bind(this);
+      this.handleSubmitEditing = this.handleSubmitEditing.bind(this);
+      this.setInput = this.setInput.bind(this);
+
+      this.contextValues = {
+        setInput: this.setInput,
+        handleSubmitEditing: this.handleSubmitEditing,
+        getReturnKeyType: this.getReturnKeyType
+      };
     }
 
     inputs;
     inputNameMap;
     inputRefs = {};
 
-    getInputPosition = name =>
-      this.inputs.findIndex(input => input.props.name === name);
+    getInputPosition(name) {
+      return this.inputs.findIndex(input => input.props.name === name);
+    }
 
-    getChildContext = () => ({
-      setInput: (name, component) => {
-        this.inputRefs[name] = component;
-      },
-      handleSubmitEditing: name => {
-        const inputPosition = this.getInputPosition(name);
-        const nextInputs = this.inputs.slice(inputPosition + 1);
-        const nextFocusableInput = nextInputs.find(
-          element =>
-            this.inputRefs[element.props.name] &&
-            this.inputRefs[element.props.name].focus
-        );
+    setInput(name, component) {
+      this.inputRefs[name] = component;
+    }
 
-        if (nextFocusableInput) {
-          this.inputRefs[nextFocusableInput.props.name].focus();
-        } else {
-          if (submitAfterLastInput) this.props.formik.submitForm();
-        }
-      },
-      getReturnKeyType: name => {
-        const inputPosition = this.getInputPosition(name);
-        const isLastInput = inputPosition === this.inputs.length - 1;
+    handleSubmitEditing(name) {
+      const inputPosition = this.getInputPosition(name);
+      const nextInputs = this.inputs.slice(inputPosition + 1);
+      const nextFocusableInput = nextInputs.find(
+        element =>
+          this.inputRefs[element.props.name] &&
+          this.inputRefs[element.props.name].focus
+      );
 
-        return isLastInput ? "done" : "next";
+      if (nextFocusableInput) {
+        this.inputRefs[nextFocusableInput.props.name].focus();
+      } else {
+        if (submitAfterLastInput) this.props.formik.submitForm();
       }
-    });
+    }
+
+    getReturnKeyType(name) {
+      const inputPosition = this.getInputPosition(name);
+      const isLastInput = inputPosition === this.inputs.length - 1;
+
+      return isLastInput ? "done" : "next";
+    }
 
     render() {
-      return <WrappedComponent {...this.props} />;
+      return (
+        <AutoFocusContext.Provider value={this.contextValues}>
+          <WrappedComponent {...this.props} />
+        </AutoFocusContext.Provider>
+      );
     }
   }
 
   return withFormik(WithNextInputAutoFocusForm);
 };
 
-export const withNextInputAutoFocusInput = Input => {
-  class WithNextInputAutoFocusInput extends React.Component<
-    $FlowFixMeProps,
-    $FlowFixMeState
-  > {
-    static contextTypes = withNextInputAutoFocusContextType;
+export const withNextInputAutoFocusInput = WrappedInput => {
+  class WithNextInputAutoFocusInput extends PureComponent<$FlowFixMeProps, $FlowFixMeState> {
+    constructor(props) {
+      super(props);
 
-    setInput = component => {
-      this.context.setInput(this.props.name, component);
-    };
+      this.renderInput = this.renderInput.bind(this);
+    }
 
-    onSubmitEditing = () => {
-      this.context.handleSubmitEditing(this.props.name);
-      if (this.props.onSubmitEditing) this.props.onSubmitEditing();
-    };
-
-    render() {
-      const { getReturnKeyType } = this.context;
+    renderInput(context) {
+      const { getReturnKeyType } = context;
       const { name } = this.props;
 
+      const setInput = component => {
+        context.setInput(name, component);
+      };
+
+      const onSubmitEditing = () => {
+        context.handleSubmitEditing(name);
+        if (this.props.onSubmitEditing) this.props.onSubmitEditing();
+      };
+
       return (
-        <Input
+        <WrappedInput
           returnKeyType={getReturnKeyType(name)}
           {...this.props}
-          ref={this.setInput}
-          onSubmitEditing={this.onSubmitEditing}
+          onSubmitEditing={onSubmitEditing}
+          ref={setInput}
         />
+      );
+    }
+
+    render() {
+      return (
+        <AutoFocusContext.Consumer>
+          {this.renderInput}
+        </AutoFocusContext.Consumer>
       );
     }
   }
