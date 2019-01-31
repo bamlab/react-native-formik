@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 
-import AutoFocusContext from "../contexts/autoFocusContext";
+import AutoFocusContext from "./contexts/autoFocusContext";
 import withFormik from "./withFormik";
 
 const getInputs = children =>
