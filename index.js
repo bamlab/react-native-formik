@@ -11,6 +11,7 @@ import withTouched from "./src/withTouched";
 import withPickerValues from "./src/withPickerValues";
 import KeyboardModal from "./src/withPickerValues/KeyboardModal";
 import makeReactNativeField from "./src/makeReactNativeField";
+import AutoFocusContext from "./src/contexts/autoFocusContext";
 import {
   withNextInputAutoFocusForm,
   withNextInputAutoFocusInput
@@ -41,5 +42,6 @@ export {
   withNextInputAutoFocusForm,
   withNextInputAutoFocusInput,
   withPickerValues,
-  KeyboardModal
+  KeyboardModal,
+  AutoFocusContext
 };
