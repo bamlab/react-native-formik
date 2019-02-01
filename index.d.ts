@@ -56,6 +56,10 @@ export function withNextInputAutoFocusInput<Props>(
   WrappedComponent: React.ComponentType<Props>
 ): React.ComponentClass<Props>;
 
+export function withFocusFirstErrorOnSubmit<Props>(
+  WrappedComponent: React.ComponentType<Props>
+): React.ComponentClass<Props>;
+
 export function withNextInputAutoFocusForm<Props>(
   WrappedComponent: React.ComponentType<Props>
 ): React.ComponentClass<Props>;

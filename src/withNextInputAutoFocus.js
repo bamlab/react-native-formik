@@ -138,3 +138,34 @@ export const withNextInputAutoFocusInput = WrappedInput => {
 
   return WithNextInputAutoFocusInput;
 };
+
+export const withFocusFirstErrorOnSubmit = WrappedComponent => {
+  class WithFocusFirstErrorOnSubmit extends PureComponent {
+    constructor(props) {
+      super(props);
+
+      this.renderButton = this.renderButton.bind(this);
+    }
+
+    renderButton(context) {
+      const onPress = () => {
+        this.props.formik.handleSubmit();
+        setTimeout(() => {
+          context.focusOnFirstError();
+        }, 0);
+      };
+
+      return <WrappedComponent {...this.props} onPress={onPress} />;
+    }
+
+    render() {
+      return (
+        <AutoFocusContext.Consumer>
+          {this.renderButton}
+        </AutoFocusContext.Consumer>
+      );
+    }
+  }
+
+  return withFormik(WithFocusFirstErrorOnSubmit);
+};

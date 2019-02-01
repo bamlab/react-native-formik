@@ -14,7 +14,8 @@ import makeReactNativeField from "./src/makeReactNativeField";
 import AutoFocusContext from "./src/contexts/autoFocusContext";
 import {
   withNextInputAutoFocusForm,
-  withNextInputAutoFocusInput
+  withNextInputAutoFocusInput,
+  withFocusFirstErrorOnSubmit
 } from "./src/withNextInputAutoFocus";
 
 const makeInputsGreatAgain = compose(
@@ -43,5 +44,6 @@ export {
   withNextInputAutoFocusInput,
   withPickerValues,
   KeyboardModal,
-  AutoFocusContext
+  AutoFocusContext,
+  withFocusFirstErrorOnSubmit
 };
