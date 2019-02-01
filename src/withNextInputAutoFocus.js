@@ -26,11 +26,13 @@ export const withNextInputAutoFocusForm = (
       this.getReturnKeyType = this.getReturnKeyType.bind(this);
       this.handleSubmitEditing = this.handleSubmitEditing.bind(this);
       this.setInput = this.setInput.bind(this);
+      this.focusOnFirstError = this.focusOnFirstError.bind(this);
 
       this.contextValues = {
         setInput: this.setInput,
         handleSubmitEditing: this.handleSubmitEditing,
-        getReturnKeyType: this.getReturnKeyType
+        getReturnKeyType: this.getReturnKeyType,
+        focusOnFirstError: this.focusOnFirstError
       };
     }
 
@@ -44,6 +46,19 @@ export const withNextInputAutoFocusForm = (
 
     setInput(name, component) {
       this.inputRefs[name] = component;
+    }
+
+    focusOnFirstError() {
+      const firstInputWithError = this.inputs.find(
+        element =>
+          this.inputRefs[element.props.name] &&
+          this.inputRefs[element.props.name].hasError() &&
+          this.inputRefs[element.props.name].focus
+      );
+
+      if (firstInputWithError) {
+        this.inputRefs[firstInputWithError.props.name].focus();
+      }
     }
 
     handleSubmitEditing(name) {
