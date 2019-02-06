@@ -2,7 +2,7 @@
 
 import React, { PureComponent } from "react";
 import { Easing, Keyboard } from "react-native";
-import Modal from "@bam.tech/react-native-modalbox";
+import Modal from "react-native-modalbox";
 import RootSiblings from "react-native-root-siblings";
 
 type PropsType = {
@@ -15,7 +15,6 @@ const renderModal = (props: PropsType, open: ?boolean) => (
   <Modal
     backdrop={false}
     position="bottom"
-    moveAboveKeyboard={false}
     isOpen={open}
     style={[
       { height: 216, backgroundColor: "rgb(200, 203, 211)" },
