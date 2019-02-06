@@ -52,7 +52,7 @@ export default () => (
             label="If you like the repo, have you starred it 😁?"
             name="star"
           />
-          <DatePicker label="Birthday" name="birthday" />
+          <FocusedDatePicker label="Birthday" name="birthday" />
 
           <Button onPress={props.handleSubmit} title="SUBMIT" />
           <Text>{JSON.stringify(props, null, 2)}</Text>
