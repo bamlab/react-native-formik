@@ -15,7 +15,7 @@ module.exports = {
       "formik",
       "lodash",
       "recompose",
-      "@bam.tech/react-native-modalbox",
+      "react-native-modalbox",
       "react-native-root-siblings",
       "@babel/runtime"
     ]
