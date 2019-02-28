@@ -25,7 +25,7 @@
     "lodash": "^4.17.11",
     "react-native-modalbox": "^1.7.1",
     "react-native-root-siblings": "3.1.7",
-    "recompose": "^0.26.0"
+    "recompose": "^0.30.0"
   },
   "author": "Almouro <contact@almouro.com> (http://alexandremoureaux.com/)",
   "license": "MIT",
