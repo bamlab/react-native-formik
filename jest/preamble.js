@@ -8,7 +8,10 @@ const mockDocumentForEnzymeMount = () => {
 
   const { JSDOM } = jsdom;
 
-  const { document } = new JSDOM("").window;
+  const { window } = new JSDOM("");
+  const { document } = window;
   global.document = document;
+  global.window = window;
 };
+
 mockDocumentForEnzymeMount();
