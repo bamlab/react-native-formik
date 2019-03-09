@@ -57,7 +57,10 @@ export function withNextInputAutoFocusInput<Props>(
 ): React.ComponentClass<Props>;
 
 export function withNextInputAutoFocusForm<Props>(
-  WrappedComponent: React.ComponentType<Props>
+  WrappedComponent: React.ComponentType<Props>,
+  options?: {
+    submitAfterLastInput: Boolean
+  }
 ): React.ComponentClass<Props>;
 
 export function withPickerValues<Props>(
