@@ -49,28 +49,27 @@ yarn add formik react-native-formik
 
 ## Guides
 
-### The Gist
-
-Say we want to create a form with Material design inputs.
+### The Gist [See it in Snack](https://snack.expo.io/@almouro/react-native-formik-gist)
 
 #### Use any Input component
 
-Let's create our custom text input design, called `MaterialTextInput`:
+We can use any `Input` component. It will receive an `error` prop in addition to the usual `TextInput` props.
 
-We can use [react-native-material-textfield](https://github.com/n4kz/react-native-material-textfield) for the material design.
-
-Our component will receive `error` in addition to the usual `TextInput` props.
-For `withNextInputAutoFocus` to work, the input component should be a class and implement a `focus` method.
+For instance, we can use [react-native-material-textfield](https://github.com/n4kz/react-native-material-textfield) for the material design.
 
 #### Create our form logic
 
 We can compose our input with `handleTextInput` to make it boilerplate free. It will:
 
 - automatically manage its state in formik provided it has a `name` prop
-- automatically set its error prop if input is touched or form has been submitted
-- automatically
+- automatically set its `error` prop if input is touched or form has been submitted
+- automatically adds the correct `TextInput` props dependending on its type (at the moment, `email`, `password`, `digits`, `name` are supported)
 
-Let's add in `withNextInputAutoFocusInput`:
+Let's add in `withNextInputAutoFocusInput`, which provides those awesome features:
+
+- when an input is submitted, it will automatically focuses on the next or submit the form if it's the last one
+- sets return key to "next" or "done" if input is the last one or not
+  For `withNextInputAutoFocus` to work, the input component should be a class and implement a `focus` method.
 
 ```javascript
 import { compose } from "recompose";
@@ -78,12 +77,12 @@ import {
   handleTextInput,
   withNextInputAutoFocusInput
 } from "react-native-formik";
-import MaterialTextInput from "./MaterialTextInput";
+import { TextField } from "react-native-material-textfield";
 
 const MyInput = compose(
   handleTextInput,
   withNextInputAutoFocusInput
-)(MaterialTextInput);
+)(TextField);
 ```
 
 To complement `withNextInputAutoFocusInput`, we need to create a `Form` component, for instance:
@@ -140,16 +139,17 @@ import { Button, TextInput, View } from "react-native";
 import { compose } from "recompose";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import makeInputGreatAgain, {
+import {
+  handleTextInput,
   withNextInputAutoFocusForm,
   withNextInputAutoFocusInput
 } from "react-native-formik";
-import MaterialTextInput from "./MaterialTextInput";
+import { TextField } from "react-native-material-textfield";
 
 const MyInput = compose(
-  makeInputGreatAgain,
+  handleTextInput,
   withNextInputAutoFocusInput
-)(MaterialTextInput);
+)(TextField);
 const Form = withNextInputAutoFocusForm(View);
 
 const validationSchema = Yup.object().shape({
@@ -182,7 +182,7 @@ export default props => (
 
 Boilerplate-free, hassle-free, our form is awesome with minimum code required.
 
-### Custom components
+### Custom components [See it in Snack](https://snack.expo.io/@almouro/react-native-formik-gist)
 
 #### withFormikControl usage
 

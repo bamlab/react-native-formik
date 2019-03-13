@@ -7,17 +7,17 @@
     "test": "jest"
   },
   "dependencies": {
-    "@bam.tech/react-native-modalbox": "^1.4.2",
-    "react-native-root-siblings": "3.1.7",
     "date-fns": "^1.29.0",
     "formik": "^1.4.0",
     "lodash": "^4.17.11",
-    "react": "16.6.1",
-    "react-native": "0.57.7",
+    "react": "16.6.3",
+    "react-native": "0.58.3",
     "react-native-input-scroll-view": "^1.8.0",
     "react-native-keyboard-spacer": "^0.4.1",
     "react-native-material-textfield": "^0.12.0",
     "react-native-modal-datetime-picker": "^6.0.0",
+    "react-native-modalbox": "^1.7.1",
+    "react-native-root-siblings": "3.1.7",
     "recompose": "^0.30.0",
     "yup": "^0.26.6"
   },
