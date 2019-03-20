@@ -382,7 +382,7 @@ Authorized types as of now are `email`, `password`, `digits` and `name`. Setting
 
 Check [the props set by the type](./src/withInputTypeProps) in the source!
 
-### withNextInputAutoFocus
+### withNextInputAutoFocus [See example in Snack](https://snack.expo.io/@almouro/Z3JlYX)
 
 - when an input is submitted, it will automatically focuses on the next or submit the form if it's the last one
 - sets return key to "next" or "done" if input is the last one or not
@@ -396,7 +396,18 @@ import {
   withNextInputAutoFocusInput
 } from "react-native-formik";
 
-const MyInput = withNextInputAutoFocusInput(TextInput);
+class CustomInput extends React.PureComponent {
+  // Implement a focus function that focused whatever needs to be focused
+  focus = () => { this.input.focus(); }
+
+  render() {
+    return (
+      <TextField ref={input => this.input = input} {...this.props} />
+    );
+  }
+}
+
+const MyInput = withNextInputAutoFocusInput(CustomInput);
 const Form = withNextInputAutoFocusForm(View);
 
 export default props => (
