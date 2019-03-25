@@ -4,6 +4,7 @@ import setFormikInitialValue from "./src/setFormikInitialValue";
 import withError from "./src/withError";
 import withErrorIfNeeded from "./src/withErrorIfNeeded";
 import withFocus from "./src/withFocus";
+import withFocusOnFirstError from "./src/withFocusOnFirstError";
 import withFormik from "./src/withFormik";
 import withFormikControl from "./src/withFormikControl";
 import withInputTypeProps from "./src/withInputTypeProps";
@@ -14,8 +15,7 @@ import makeReactNativeField from "./src/makeReactNativeField";
 import AutoFocusContext from "./src/contexts/autoFocusContext";
 import {
   withNextInputAutoFocusForm,
-  withNextInputAutoFocusInput,
-  withFocusFirstErrorOnSubmit
+  withNextInputAutoFocusInput
 } from "./src/withNextInputAutoFocus";
 
 const makeInputsGreatAgain = compose(
@@ -45,5 +45,5 @@ export {
   withPickerValues,
   KeyboardModal,
   AutoFocusContext,
-  withFocusFirstErrorOnSubmit
+  withFocusOnFirstError
 };

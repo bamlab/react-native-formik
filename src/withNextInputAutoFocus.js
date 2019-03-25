@@ -48,19 +48,6 @@ export const withNextInputAutoFocusForm = (
       this.inputRefs[name] = component;
     }
 
-    focusOnFirstError() {
-      const firstInputWithError = this.inputs.find(
-        element =>
-          this.inputRefs[element.props.name] &&
-          this.inputRefs[element.props.name].hasError() &&
-          this.inputRefs[element.props.name].focus
-      );
-
-      if (firstInputWithError) {
-        this.inputRefs[firstInputWithError.props.name].focus();
-      }
-    }
-
     handleSubmitEditing(name) {
       const inputPosition = this.getInputPosition(name);
       const nextInputs = this.inputs.slice(inputPosition + 1);
@@ -84,6 +71,19 @@ export const withNextInputAutoFocusForm = (
       return isLastInput ? "done" : "next";
     }
 
+    focusOnFirstError() {
+      const firstInputWithError = this.inputs.find(
+        element =>
+          this.inputRefs[element.props.name] &&
+          this.inputRefs[element.props.name].hasError() &&
+          this.inputRefs[element.props.name].focus
+      );
+
+      if (firstInputWithError) {
+        this.inputRefs[firstInputWithError.props.name].focus();
+      }
+    }
+
     render() {
       return (
         <AutoFocusContext.Provider value={this.contextValues}>
@@ -97,7 +97,10 @@ export const withNextInputAutoFocusForm = (
 };
 
 export const withNextInputAutoFocusInput = WrappedInput => {
-  class WithNextInputAutoFocusInput extends PureComponent<$FlowFixMeProps, $FlowFixMeState> {
+  class WithNextInputAutoFocusInput extends PureComponent<
+    $FlowFixMeProps,
+    $FlowFixMeState
+  > {
     constructor(props) {
       super(props);
 
@@ -137,35 +140,4 @@ export const withNextInputAutoFocusInput = WrappedInput => {
   }
 
   return WithNextInputAutoFocusInput;
-};
-
-export const withFocusFirstErrorOnSubmit = WrappedComponent => {
-  class WithFocusFirstErrorOnSubmit extends PureComponent {
-    constructor(props) {
-      super(props);
-
-      this.renderButton = this.renderButton.bind(this);
-    }
-
-    renderButton(context) {
-      const onPress = () => {
-        this.props.formik.handleSubmit();
-        setTimeout(() => {
-          context.focusOnFirstError();
-        }, 0);
-      };
-
-      return <WrappedComponent {...this.props} onPress={onPress} />;
-    }
-
-    render() {
-      return (
-        <AutoFocusContext.Consumer>
-          {this.renderButton}
-        </AutoFocusContext.Consumer>
-      );
-    }
-  }
-
-  return withFormik(WithFocusFirstErrorOnSubmit);
 };
