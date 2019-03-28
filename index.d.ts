@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Subject } from 'rxjs';
 
 export interface makeReactNativeFieldProps {
   name: string;
@@ -59,6 +60,8 @@ export function withNextInputAutoFocusInput<Props>(
 export function withFocusOnFirstError<Props>(
   WrappedComponent: React.ComponentType<Props>
 ): React.ComponentClass<Props>;
+
+export const focusOnFirstError: Subject<any>;
 
 export function withNextInputAutoFocusForm<Props>(
   WrappedComponent: React.ComponentType<Props>,

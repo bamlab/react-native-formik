@@ -5,7 +5,7 @@ import withError from "./src/withError";
 import withErrorIfNeeded from "./src/withErrorIfNeeded";
 import withFocus from "./src/withFocus";
 import withFocusOnFirstError, {
-  withFocusOnFirstErrorSubject
+  focusOnFirstError
 } from "./src/withFocusOnFirstError";
 import withFormik from "./src/withFormik";
 import withFormikControl from "./src/withFormikControl";
@@ -48,5 +48,5 @@ export {
   KeyboardModal,
   AutoFocusContext,
   withFocusOnFirstError,
-  withFocusOnFirstErrorSubject
+  focusOnFirstError
 };
