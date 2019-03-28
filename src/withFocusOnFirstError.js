@@ -4,7 +4,7 @@ import { Subject } from "rxjs";
 import withAutoFocusContext from "./withAutoFocusContext";
 import withFormik from "./withFormik";
 
-export const focusOnFirstError = new Subject();
+const focusOnFirstErrorSubject = new Subject();
 
 function withFocusOnFirstError(WrappedComponent) {
   class withFocusOnFirstError extends PureComponent {
@@ -15,7 +15,7 @@ function withFocusOnFirstError(WrappedComponent) {
     }
 
     componentDidMount() {
-      this.subscription = focusOnFirstError.subscribe(() => {
+      this.subscription = focusOnFirstErrorSubject.subscribe(() => {
         this.props.autoFocusContext.focusOnFirstError();
       });
     }
@@ -37,6 +37,10 @@ function withFocusOnFirstError(WrappedComponent) {
   }
 
   return withAutoFocusContext(withFormik(withFocusOnFirstError));
+}
+
+export function focusOnFirstError() {
+  focusOnFirstErrorSubject.next();
 }
 
 export default withFocusOnFirstError;
