@@ -24,6 +24,8 @@ export interface withFormikControlProps {
   error?: string;
   value: string;
   onChange: string;
+  setFieldValue(value: string): void;
+  setFieldTouched(): void;
 }
 
 export type makeInputGreatAgainProps = makeReactNativeFieldProps &
