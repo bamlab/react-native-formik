@@ -26,8 +26,8 @@ The point is to make your forms easy to write and provide features your users wi
 
 - [Installation](#installation)
 - [Guides](#guides)
-  - [The Gist](#the-gist)
-  - [Custom components](#custom-components)
+  - [The Gist](#the-gist-see-it-in-snack)
+  - [Custom components](#custom-components-see-it-in-snack)
   - [Formatting inputs](#formatting-inputs)
   - [Move form above keyboard](#move-form-above-keyboard)
   - [Step by step formik + react-native-formik integration](./doc/formik_step_by_step.md)
