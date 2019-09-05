@@ -1,43 +1,28 @@
-import React, { PureComponent } from "react";
+import { connect } from "formik";
+import React, { useContext, useEffect } from "react";
 import { Subject } from "rxjs";
 
-import withAutoFocusContext from "./withAutoFocusContext";
-import withFormik from "./withFormik";
+import AutoFocusContext from "./contexts/AutoFocusContext";
 
 const focusOnFirstErrorSubject = new Subject();
 
-function withFocusOnFirstError(WrappedComponent) {
-  class withFocusOnFirstError extends PureComponent {
-    constructor(props) {
-      super(props);
+const withFocusOnFirstError = WrappedComponent =>
+  connect(({ formik: { handleSubmit }, ...props }) => {
+    const { focusOnFirstError } = useContext(AutoFocusContext);
 
-      this.onPress = this.onPress.bind(this);
-    }
+    useEffect(() => {
+      const sub = focusOnFirstErrorSubject.subscribe(focusOnFirstError);
 
-    componentDidMount() {
-      this.subscription = focusOnFirstErrorSubject.subscribe(() => {
-        this.props.autoFocusContext.focusOnFirstError();
-      });
-    }
+      return sub.unsubscribe();
+    });
 
-    componentWillUnmount() {
-      this.subscription.unsubscribe();
-    }
+    const _onPress = () => {
+      handleSubmit();
+      setTimeout(focusOnFirstError, 0);
+    };
 
-    onPress() {
-      this.props.formik.handleSubmit();
-      setTimeout(() => {
-        this.props.autoFocusContext.focusOnFirstError();
-      }, 0);
-    }
-
-    render() {
-      return <WrappedComponent {...this.props} onPress={this.onPress} />;
-    }
-  }
-
-  return withAutoFocusContext(withFormik(withFocusOnFirstError));
-}
+    return <WrappedComponent onPress={_onPress} {...props} />;
+  });
 
 export function focusOnFirstError() {
   focusOnFirstErrorSubject.next();

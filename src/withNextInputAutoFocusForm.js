@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 
-import AutoFocusContext from "./contexts/autoFocusContext";
+import AutoFocusContext from "./contexts/AutoFocusContext";
 import withFormik from "./withFormik";
 
 const getInputs = children =>
@@ -13,7 +13,7 @@ const getInputs = children =>
     return partialInputs;
   }, []);
 
-export const withNextInputAutoFocusForm = (
+const withNextInputAutoFocusForm = (
   WrappedComponent,
   { submitAfterLastInput } = { submitAfterLastInput: true }
 ) => {
@@ -96,48 +96,4 @@ export const withNextInputAutoFocusForm = (
   return withFormik(WithNextInputAutoFocusForm);
 };
 
-export const withNextInputAutoFocusInput = WrappedInput => {
-  class WithNextInputAutoFocusInput extends PureComponent<
-    $FlowFixMeProps,
-    $FlowFixMeState
-  > {
-    constructor(props) {
-      super(props);
-
-      this.renderInput = this.renderInput.bind(this);
-    }
-
-    renderInput(context) {
-      const { getReturnKeyType } = context;
-      const { name } = this.props;
-
-      const setInput = component => {
-        context.setInput(name, component);
-      };
-
-      const onSubmitEditing = () => {
-        context.handleSubmitEditing(name);
-        if (this.props.onSubmitEditing) this.props.onSubmitEditing();
-      };
-
-      return (
-        <WrappedInput
-          returnKeyType={getReturnKeyType(name)}
-          {...this.props}
-          onSubmitEditing={onSubmitEditing}
-          ref={setInput}
-        />
-      );
-    }
-
-    render() {
-      return (
-        <AutoFocusContext.Consumer>
-          {this.renderInput}
-        </AutoFocusContext.Consumer>
-      );
-    }
-  }
-
-  return WithNextInputAutoFocusInput;
-};
+export default withNextInputAutoFocusForm;

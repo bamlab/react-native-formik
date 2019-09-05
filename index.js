@@ -14,11 +14,9 @@ import withTouched from "./src/withTouched";
 import withPickerValues from "./src/withPickerValues";
 import KeyboardModal from "./src/withPickerValues/KeyboardModal";
 import makeReactNativeField from "./src/makeReactNativeField";
-import AutoFocusContext from "./src/contexts/autoFocusContext";
-import {
-  withNextInputAutoFocusForm,
-  withNextInputAutoFocusInput
-} from "./src/withNextInputAutoFocus";
+import AutoFocusContext from "./src/contexts/AutoFocusContext";
+import withNextInputAutoFocusForm from "./src/withNextInputAutoFocusForm";
+import withNextInputAutoFocusInput from "./src/withNextInputAutoFocusInput";
 
 const makeInputsGreatAgain = compose(
   withInputTypeProps,
