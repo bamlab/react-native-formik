@@ -427,6 +427,84 @@ export default props => (
 );
 ```
 
+### withFocusOnFirstError
+
+- when an form is submitted, and some input is invalid, it will automatically focuses on the first error.
+- :warning: the previous step `withNextInputAutoFocus` needs to be implemented.
+- :warning: The button need to be wrapped by `withFocusOnFirstError`.
+
+```javascript
+import { TextInput, View, Button } from "react-native";
+import {
+  withNextInputAutoFocusForm,
+  withNextInputAutoFocusInput,
+  withFocusOnFirstError,
+} from "react-native-formik";
+
+class CustomInput extends React.PureComponent {
+  // Implement a focus function that focused whatever needs to be focused
+  focus = () => { this.input.focus(); }
+  // Implement your logic hasError().
+  hasError = () => !!this.props.error && !!this.props.externalError;
+
+  render() {
+    return (
+      <TextField ref={input => this.input = input} {...this.props} />
+    );
+  }
+}
+
+const MyInput = withNextInputAutoFocusInput(CustomInput);
+const Form = withNextInputAutoFocusForm(View);
+const Button = withFocusOnFirstError(Button);
+
+export default props => (
+  <Formik
+    onSubmit={values => console.log(values)}
+    validationSchema={validationSchema}
+    render={props => {
+      return (
+        <Form>
+          <MyInput label="Email" name="email" type="email" />
+          <MyInput label="Password" name="password" type="password" />
+          <MyInput label="First Name" name="firstName" type="name" />
+          <Button title="Submit" />
+        </Form>
+      );
+    }}
+  />
+);
+```
+
+We can also trigger this outside Formik context, maybe you wanna do some api calls, set the errors manually and after this focus on errors.
+
+```javascript
+import {
+  focusOnFirstError,
+} from "react-native-formik";
+
+export default props => (
+  <Formik
+    onSubmit={values => {
+      //call apis
+      // set the errors manually
+      focusOnFirstError();
+    }}
+    validationSchema={validationSchema}
+    render={props => {
+      return (
+        <Form>
+          <MyInput label="Email" name="email" type="email" />
+          <MyInput label="Password" name="password" type="password" />
+          <MyInput label="First Name" name="firstName" type="name" />
+          <Button title="Submit" />
+        </Form>
+      );
+    }}
+  />
+);
+```
+
 ### withTouched
 
 Pass in the Formik touched value for the input as a prop.
