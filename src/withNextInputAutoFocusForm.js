@@ -75,6 +75,7 @@ const withNextInputAutoFocusForm = (
       const firstInputWithError = this.inputs.find(
         element =>
           this.inputRefs[element.props.name] &&
+          this.inputRefs[element.props.name].hasError &&
           this.inputRefs[element.props.name].hasError() &&
           this.inputRefs[element.props.name].focus
       );
