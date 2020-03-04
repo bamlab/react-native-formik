@@ -17,7 +17,7 @@ export interface withErrorProps {
 }
 
 export interface withTouchedProps {
-  name: string;
+  touched: boolean;
 }
 
 export interface withFormikControlProps {
