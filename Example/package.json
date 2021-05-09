@@ -9,7 +9,7 @@
   "dependencies": {
     "date-fns": "^1.29.0",
     "formik": "^1.4.0",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.21",
     "react": "16.6.3",
     "react-native": "0.58.3",
     "react-native-input-scroll-view": "^1.8.0",
